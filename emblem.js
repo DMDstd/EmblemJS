@@ -10,7 +10,7 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(800, 600);
+  createCanvas(1920, 1080);
   imageMode(CENTER);
   player = new Player(width / 2, height - 100, 200, images["FenorisL1"], images["FenorisR1"]);
 }
