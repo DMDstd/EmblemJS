@@ -15,10 +15,6 @@ function setup() {
   player = new Player(width / 2, height - 100, width/8, images["FenorisL1"], images["FenorisR1"]);
 }
 
-function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
-}
-
 function draw() {
   background(0);
   image(images["bg"], width/2, height/2, width, height);
