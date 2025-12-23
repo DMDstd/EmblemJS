@@ -12,7 +12,7 @@ function preload() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
   imageMode(CENTER);
-  player = new Player(width / 2, height - 100, 200, images["FenorisL1"], images["FenorisR1"]);
+  player = new Player(width / 2, height - 100, width/8, images["FenorisL1"], images["FenorisR1"]);
 }
 
 function windowResized() {
