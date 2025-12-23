@@ -10,16 +10,8 @@ function preload() {
 }
 
 function setup() {
-  const canvas = document.getElementById("game");
-  const ctx = canvas.getContext("2d");
-  function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  }
-  window.addEventListener("resize", resizeCanvas);
-  resizeCanvas();
+  createCanvas(windowWidth, windowHeight);
   imageMode(CENTER);
-  ctx.imageSmoothingEnabled = false;
   player = new Player(width / 2, height - 100, 200, images["FenorisL1"], images["FenorisR1"]);
 }
 
