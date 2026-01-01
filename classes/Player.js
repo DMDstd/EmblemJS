@@ -79,9 +79,9 @@ hitbox() {
     }
     for (let entity of entities) {
       if (
-        nx < entity.x + T_S &&
+        nx < entity.x + entity.w &&
         nx + this.size > entity.x &&
-        ny < entity.y + T_S &&
+        ny < entity.y + entity.h &&
         ny + this.size > entity.y
       ) {
         console.log("kolize brasko");

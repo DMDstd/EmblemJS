@@ -20,6 +20,8 @@ let lastCombatTick = 0;
 let yellowKey = 0;
 let blueKey = 0;
 let redKey = 0;
+let gold = 0;
+let exp = 0;
 const COMBAT_INTERVAL = 1000; // ms
 
 function preload() {
@@ -76,8 +78,9 @@ function drawCombatWindow() {
     x + w / 2,
     y + 80
   );
+  image(images["FenorisR1"], x + w / 8, y + 180, T_S, T_S);
+  image(currentEnemy.img, x + w / 1.3, y + 180, T_S, T_S);
   textAlign(LEFT);
-
 }
 
 function drawUI() {
@@ -92,12 +95,11 @@ function drawUI() {
   text("HP: " + player.hp, 20, 90);
   text("ATK: " + player.atk, 20, 110);
   text("DEF: " + player.def, 20, 130);
-  textSize(16);
-  text("Keys", 20, 170);
-  textSize(14);
-  text("Yellow: " + yellowKey, 20, 200);
-  text("Blue: " + blueKey, 20, 220);
-  text("Red: " + redKey, 20, 240);
+  text("Gold: " + gold, 20, 155);
+  text("Exp: " + exp, 20, 175);
+  text("Yellow Keys: " + yellowKey, 20, 200);
+  text("Blue Keys: " + blueKey, 20, 220);
+  text("Red Keys: " + redKey, 20, 240);
   if(currentTarget) {
     textSize(16);
   text(`${currentTarget.name}`, 20, 500);
@@ -158,11 +160,15 @@ function draw() {
     drawCombatWindow();
   }
   if (gameState === "gameover") {
+    noStroke();
     background(0);
     fill(255, 0, 0);
     textAlign(CENTER);
     textSize(32);
-    text("GAME OVER", (windowWidth - UI_WIDTH) / 2, windowHeight / 2);
+    text("GAME OVER", windowWidth / 3.3, windowHeight / 2.5);
+    fill(0, 255, 0);
+    textSize(26);
+    text("RESPAWN", windowWidth / 3.3, windowHeight / 2);
     textAlign(LEFT);
   } 
 }

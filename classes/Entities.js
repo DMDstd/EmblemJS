@@ -2,32 +2,38 @@ const ENTITY_TYPES = {
     1: {
     name: "Yellow Key",
     img: "yellowKey",
-    inter: "collectable"
+    inter: "collectable",
+    goldGain: 0
   },
     2: {
     name: "Blue Key",
     img: "blueKey",
-    inter: "collectable"
+    inter: "collectable",
+    goldGain: 0
   },
     3: {
     name: "Red Key",
     img: "redKey",
-    inter: "collectable"
+    inter: "collectable",
+    goldGain: 0
   },
     4: {
     name: "Yellow Chest",
     img: "yellowChest",
-    inter: "container"
+    inter: "container",
+    goldGain: 10
   },
     5: {
     name: "Blue Chest",
     img: "blueChest",
-    inter: "container"
+    inter: "container",
+    goldGain: 25
   },
     6: {
     name: "Red Chest",
     img: "redChest",
-    inter: "container"
+    inter: "container",
+    goldGain: 50
   },
 };
 
@@ -37,21 +43,26 @@ function startInteraction(entity) {
     if(entity.name === "Yellow Key")yellowKey++;
     else if(entity.name === "Blue Key")blueKey++;
     else if(entity.name === "Red Key")redKey++;
-  } else if (entity.inter === "container") {
-    if(entity.name === "Yellow Chest" && yellowKey > 0) { 
+  }
+  if (entity.inter === "container") {
+    if (entity.name === "Yellow Chest") {
+      if (yellowKey > 0) {
         yellowKey--;
-    } else {
-        return 0;
-    }
-    if(entity.name === "Blue Chest" && blueKey > 0) {
+        gold += entity.goldGain;
+      }
+      else return 0;
+    } else if (entity.name === "Blue Chest") {
+      if (blueKey > 0) {
         blueKey--;
-    } else {
-        return 0;
-    }
-    if(entity.name === "Red Chest" && redKey > 0) {
+        gold += entity.goldGain;
+      }
+      else return 0;
+    } else if (entity.name === "Red Chest") {
+      if (redKey > 0) {
         redKey--;
-    } else {
-        return 0;
+        gold += entity.goldGain;
+      }
+      else return 0;
     }
   }
   entity.despawn();
@@ -67,6 +78,7 @@ class Entity {
     this.y = y;
     this.w = w;
     this.h = h;
+    this.goldGain = cfg.goldGain;
     this.inter = cfg.inter;
     this.name = cfg.name;
     this.img = images[cfg.img];

@@ -5,6 +5,8 @@ const ENEMY_TYPES = {
     atk: 20,
     def: 5,
     img: "GreenSlime",
+    goldGain: 2,
+    expGain: 2
   },
     1: {
     name: "Red Slime",
@@ -12,6 +14,8 @@ const ENEMY_TYPES = {
     atk: 40,
     def: 2,
     img: "RedSlime",
+    goldGain: 2,
+    expGain: 2
   },
     2: {
     name: "Golden Slime",
@@ -19,6 +23,8 @@ const ENEMY_TYPES = {
     atk: 4,
     def: 4,
     img: "GoldenSlime",
+    goldGain: 20,
+    expGain: 1
   },
     3: {
     name: "Pink Slime",
@@ -26,6 +32,8 @@ const ENEMY_TYPES = {
     atk: 4,
     def: 4,
     img: "PinkSlime",
+    goldGain: 2,
+    expGain: 2
   },
     4: {
     name: "Purple Slime",
@@ -33,13 +41,17 @@ const ENEMY_TYPES = {
     atk: 4,
     def: 4,
     img: "PurpleSlime",
+    goldGain: 2,
+    expGain: 2
   },
     5: {
     name: "White Slime",
     hp: 20,
-    atk: 4,
-    def: 4,
+    atk: 120,
+    def: 5,
     img: "WhiteSlime",
+    goldGain: 2,
+    expGain: 2
   },
     6: {
     name: "Yellow Slime",
@@ -47,6 +59,8 @@ const ENEMY_TYPES = {
     atk: 4,
     def: 4,
     img: "YellowSlime",
+    goldGain: 2,
+    expGain: 2
   }
 };
 
@@ -80,6 +94,8 @@ function updateCombat() {
 
 function endCombat(victory) {
   if (victory) {
+    gold += currentEnemy.goldGain;
+    exp += currentEnemy.expGain;
     currentEnemy.die();
     enemies = enemies.filter(e => e !== currentEnemy);
     gameState = "explore";
@@ -114,6 +130,8 @@ class Enemy {
     this.x = x;
     this.y = y;
     this.name = cfg.name;
+    this.goldGain = cfg.goldGain;
+    this.expGain = cfg.expGain;
     this.hp = cfg.hp;
     this.atk = cfg.atk;
     this.def = cfg.def;
