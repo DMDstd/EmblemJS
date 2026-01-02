@@ -1,4 +1,5 @@
 let walls = [];
+let water = [];
 let stairs = [];
 let triggers = [];
 let floor = [];
@@ -48,6 +49,8 @@ function preload() {
   images["coins"] = loadImage('./images/coins.png');
   images["settings"] = loadImage('./images/settings.png');
   images["shop"] = loadImage('./images/shop.png');
+  images["water"] = loadImage('./images/water.png');
+  //images["water1"] = loadImage('./images/water1.png');
 }
 
 function setup() {
@@ -124,16 +127,16 @@ function draw() {
   translate(UI_WIDTH, 0);
   if (gameState === "explore") {
   if (keyIsDown(LEFT_ARROW) || keyIsDown(65)) {
-    player.move("left", walls, enemies);
+    player.move("left", walls, water, enemies);
   }
   if (keyIsDown(RIGHT_ARROW) || keyIsDown(68)) {
-    player.move("right", walls, enemies);
+    player.move("right", walls, water, enemies);
   }
   if (keyIsDown(UP_ARROW) || keyIsDown(87)) {
-    player.move("up", walls, enemies);
+    player.move("up", walls, water, enemies);
   }
   if (keyIsDown(DOWN_ARROW) || keyIsDown(83)) {
-    player.move("down", walls, enemies);
+    player.move("down", walls, water, enemies);
   }
   }
   for (let floors of floor) {
@@ -141,6 +144,9 @@ function draw() {
   }
   for (let wall of walls) {
     wall.draw();
+  }
+  for (let w of water) {
+    w.draw();
   }
   for (let stair of stairs) {
     stair.draw();
@@ -197,6 +203,7 @@ function generateLevel(level) {
   walls = [];
   triggers = [];
   stairs = [];
+  water = [];
   for (let y = 0; y < level.length; y++) {
     for (let x = 0; x < level[y].length; x++) {
       if (level[y][x] === "0") {
@@ -209,6 +216,8 @@ function generateLevel(level) {
       } else if (level[y][x] === "3") {
         stairs.push(new Stairs(x * T_S, y * T_S, T_S));
         triggers.push(new Trigger(x * T_S, y * T_S, T_S, "down"));
+      } else if (level[y][x] === "4") {
+        water.push(new Water(x * T_S, y * T_S, T_S));
       }
     }
   }

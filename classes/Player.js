@@ -11,7 +11,7 @@ class Player {
     this.atk = 10;
     this.def = 10;
   }
-move(d, walls, enemies) {
+move(d, walls, water, enemies) {
   let nx = this.x;
   let ny = this.y;
   if (d === "left") {
@@ -28,7 +28,7 @@ move(d, walls, enemies) {
   if (d === "down") {
     ny += this.speed;
   }
-  let result = this.collides(nx, ny, walls, enemies, entities);
+  let result = this.collides(nx, ny, walls, water, enemies, entities);
   // Move only if no collision
   if (!result) {
     this.x = nx;
@@ -54,13 +54,24 @@ hitbox() {
     this.size
   );
 }
-  collides(nx, ny, walls, enemies, entities) {
+  collides(nx, ny, walls, water, enemies, entities) {
     for (let wall of walls) {
       if (
         nx < wall.x + wall.size &&
         nx + this.size > wall.x &&
         ny < wall.y + wall.size &&
         ny + this.size > wall.y
+      ) {
+        console.log("kolize brasko");
+        return true;
+      }
+    }
+    for (let w of water) {
+      if (
+        nx < w.x + w.size &&
+        nx + this.size > w.x &&
+        ny < w.y + w.size &&
+        ny + this.size > w.y
       ) {
         console.log("kolize brasko");
         return true;
