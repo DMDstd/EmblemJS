@@ -12,7 +12,7 @@ let currentLevel = 1;
 let defeatedEnemies = {};
 let despawnedEntities = {};
 const UI_WIDTH = 381;
-let gameState = "explore"; // "combat"
+let gameState = "explore";
 let currentEnemy = null;
 let currentEntity = null;
 let currentTarget = null;
@@ -43,6 +43,11 @@ function preload() {
   images["yellowChest"] = loadImage('./images/YellowChest.png');
   images["blueChest"] = loadImage('./images/BlueChest.png');
   images["redChest"] = loadImage('./images/RedChest.png');
+  images["shield"] = loadImage('./images/shield.png');
+  images["heart"] = loadImage('./images/heart.png');
+  images["coins"] = loadImage('./images/coins.png');
+  images["settings"] = loadImage('./images/settings.png');
+  images["shop"] = loadImage('./images/shop.png');
 }
 
 function setup() {
