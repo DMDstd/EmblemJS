@@ -52,7 +52,7 @@ function preload() {
   images["shop"] = loadImage('./images/shop.png');
   images["water"] = loadImage('./images/water.png');
   images["sword"] = loadImage('./images/sword.png');
-  //images["water1"] = loadImage('./images/water1.png');
+  images["XP"] = loadImage('./images/XP.png');
 }
 
 function setup() {
@@ -112,13 +112,14 @@ function drawUI() {
   text(": " + player.def, 54, 150);
   image(images["coins"], 20, 160, 30, 30);
   text(": " + gold, 54, 180);
-  text("Exp: " + exp, 20, 210);
-  image(images["yellowKey"], 20, 210, 60, 30);
-  text(": " + yellowKey, 84, 230);
-  image(images["blueKey"], 20, 240, 60, 30);
-  text(": " + blueKey, 84, 260);
-  image(images["redKey"], 20, 270, 60, 30);
-  text(": " + redKey, 84, 290);
+  image(images["XP"], 20, 190, 30, 30);
+  text(": " + exp, 54, 210);
+  image(images["yellowKey"], 20, 230, 60, 30);
+  text(": " + yellowKey, 84, 250);
+  image(images["blueKey"], 20, 260, 60, 30);
+  text(": " + blueKey, 84, 280);
+  image(images["redKey"], 20, 290, 60, 30);
+  text(": " + redKey, 84, 310);
   if(currentTarget) {
     textSize(16);
   image(currentTarget.img, 150, 490, 100, 100);
