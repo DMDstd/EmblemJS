@@ -127,9 +127,10 @@ function drawUI() {
   textSize(14);
   image(images["heart"], 20, 510, 30, 30);
   text(`: ${currentTarget.hp}`, 54, 530);
-  text(`ATK: ${currentTarget.atk}`, 20, 555);
-  image(images["shield"], 20, 560, 30, 30);
-  text(`: ${currentTarget.def}`, 54, 580);
+  image(images["sword"], 20, 540, 30, 30);
+  text(`: ${currentTarget.atk}`, 54, 560);
+  image(images["shield"], 20, 570, 30, 30);
+  text(`: ${currentTarget.def}`, 54, 590);
   }
   stroke(80);
   line(UI_WIDTH - 10, 0, UI_WIDTH - 10, windowHeight);
