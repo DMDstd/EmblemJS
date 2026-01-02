@@ -6,7 +6,7 @@ const ENEMY_TYPES = {
     def: 5,
     img: "GreenSlime",
     goldGain: 2,
-    expGain: 2
+    expGain: 3
   },
     1: {
     name: "Red Slime",
@@ -15,7 +15,7 @@ const ENEMY_TYPES = {
     def: 2,
     img: "RedSlime",
     goldGain: 2,
-    expGain: 2
+    expGain: 3
   },
     2: {
     name: "Golden Slime",
@@ -33,7 +33,7 @@ const ENEMY_TYPES = {
     def: 4,
     img: "PinkSlime",
     goldGain: 2,
-    expGain: 2
+    expGain: 3
   },
     4: {
     name: "Purple Slime",
@@ -42,25 +42,25 @@ const ENEMY_TYPES = {
     def: 4,
     img: "PurpleSlime",
     goldGain: 2,
-    expGain: 2
+    expGain: 3
   },
     5: {
     name: "White Slime",
     hp: 20,
-    atk: 120,
+    atk: 1200,
     def: 5,
     img: "WhiteSlime",
     goldGain: 2,
-    expGain: 2
+    expGain: 3
   },
     6: {
     name: "Yellow Slime",
     hp: 20,
     atk: 4,
-    def: 400,
+    def: 4000,
     img: "YellowSlime",
     goldGain: 2,
-    expGain: 2
+    expGain: 3
   }
 };
 

@@ -40,10 +40,28 @@ const ENTITY_TYPES = {
     img: "redChest",
     inter: "container",
     goldGain: 50
+  },
+    7: {
+    name: "HP Potion",
+    img: "hpBottle",
+    inter: "container",
+    goldGain: 0
+  },
+    8: {
+    name: "Attack Potion",
+    img: "atkBottle",
+    inter: "container",
+    goldGain: 0
+  },
+    9: {
+    name: "Defence Potion",
+    img: "defBottle",
+    inter: "container",
+    goldGain: 0
   }
 };
 
-function startInteraction(entity) {
+function startInteraction(entity, player) {
   currentEntity = entity;
   if (entity.inter === "collectable") {
     if(entity.name === "Yellow Key")yellowKey++;
@@ -69,6 +87,12 @@ function startInteraction(entity) {
         gold += entity.goldGain;
       }
       else return 0;
+    } else if (entity.name === "Defence Potion") {
+      player.def += 3;
+    } else if (entity.name === "HP Potion") {
+      player.hp += 30;
+    } else if (entity.name === "Attack Potion") {
+      player.atk += 3;
     }
   }
   entity.despawn();

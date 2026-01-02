@@ -10,7 +10,7 @@ let keys = {};
 let loopCount = 0;
 let currentTrack = "P1";
 const T_S = 59;
-let currentLevel = 10;
+let currentLevel = 1;
 let defeatedEnemies = {};
 let despawnedEntities = {};
 const UI_WIDTH = 381;
@@ -22,11 +22,14 @@ let currentTargetSwitch = null;
 let shop = 0;
 let sett = 0;
 let lastCombatTick = 0;
-let yellowKey = 0;
-let blueKey = 0;
-let redKey = 0;
+let yellowKey = 1;
+let blueKey = 1;
+let redKey = 1;
 let gold = 0;
 let exp = 0;
+let PlayerHP = 100;
+let PlayerAtk = 10;
+let PlayerDef = 10;
 const COMBAT_INTERVAL = 1000;
 
 function preload() {
@@ -57,6 +60,9 @@ function preload() {
   images["water"] = loadImage('./images/water.png');
   images["sword"] = loadImage('./images/sword.png');
   images["XP"] = loadImage('./images/XP.png');
+  images["defBottle"] = loadImage('./images/defBottle.png');
+  images["hpBottle"] = loadImage('./images/hpBottle.png');
+  images["atkBottle"] = loadImage('./images/atkBottle.png');
 }
 
 function setup() {
@@ -195,7 +201,7 @@ function draw() {
   }
   for (let obj of triggers) {
     if(obj.checkTrigger(player))loadLevel(currentLevel);
-    obj.hitbox();
+    //obj.hitbox();
   }
   for (let e of enemies) {
     e.show();
@@ -207,7 +213,7 @@ function draw() {
     b.draw();
   }
   player.draw();
-  player.hitbox();
+  //player.hitbox();
   if (gameState === "explore") {
     updateHoverTarget(enemies, buttons);
   }
@@ -376,6 +382,15 @@ function generateEntities(map, levelNum) {
       }
       if (tile === "6" && !despawnedEntities[key]) {
         entities.push(new Entity(px, py, T_S, T_S, 6, key));
+      }
+      if (tile === "7" && !despawnedEntities[key]) {
+        entities.push(new Entity(px + T_S/4, py + T_S/6, 30, 48, 7, key));
+      }
+      if (tile === "8" && !despawnedEntities[key]) {
+        entities.push(new Entity(px + T_S/4, py + T_S/6, 30, 48, 8, key));
+      }
+      if (tile === "9" && !despawnedEntities[key]) {
+        entities.push(new Entity(px + T_S/4, py + T_S/6, 30, 48, 9, key));
       }
     }
   }

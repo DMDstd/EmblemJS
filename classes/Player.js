@@ -7,9 +7,9 @@ class Player {
     this.imgR = imgR;
     this.imgL = imgL;
     this.speed = 3;
-    this.hp = 100;
-    this.atk = 10;
-    this.def = 10;
+    this.hp = PlayerHP;
+    this.atk = PlayerAtk;
+    this.def = PlayerDef;
   }
 move(d, walls, water, enemies) {
   let nx = this.x;
@@ -36,7 +36,7 @@ move(d, walls, water, enemies) {
   } else if (result.enemy && gameState === "explore") {
     startCombat(result.enemy);
   } else if (result.entity && gameState === "explore") {
-    startInteraction(result.entity);
+    startInteraction(result.entity, player);
   }
 }
 teleport(x, y) {
