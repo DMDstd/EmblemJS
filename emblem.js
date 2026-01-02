@@ -99,6 +99,7 @@ function drawUI() {
   fill(255);
   textSize(16);
   text(`Floor: ${currentLevel}`, 20, 20);
+  image(images["FenorisR1"], 150, 20, 200, 300);
   text("Player: Fenoris", 20, 60);
   textSize(14);
   image(images["heart"], 20, 70, 30, 30);
@@ -118,6 +119,7 @@ function drawUI() {
   text(": " + redKey, 84, 290);
   if(currentTarget) {
     textSize(16);
+  image(currentTarget.img, 150, 490, 100, 100);
   text(`${currentTarget.name}`, 20, 500);
   textSize(14);
   image(images["heart"], 20, 510, 30, 30);
