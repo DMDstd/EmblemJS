@@ -1,4 +1,10 @@
 const ENTITY_TYPES = {
+  0: {
+    name: "Yellow Key",
+    img: "yellowKey",
+    inter: "collectable",
+    goldGain: 0
+  },
     1: {
     name: "Yellow Key",
     img: "yellowKey",
