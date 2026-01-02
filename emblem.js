@@ -28,7 +28,7 @@ const COMBAT_INTERVAL = 1000;
 function preload() {
   images["FenorisL1"] = loadImage('./images/FenorisL1Hit.png');
   images["FenorisR1"] = loadImage('./images/FenorisR1Hit.png');
-  images["stone"] = loadImage('./images/Stone.png');
+  images["stone"] = loadImage('./images/Stone2.png');
   images["stairs"] = loadImage('./images/Stairs.png');
   images["GreenSlime"] = loadImage('./images/GreenSlime.png');
   images["GoldenSlime"] = loadImage('./images/GoldenSlime.png');
@@ -46,6 +46,7 @@ function preload() {
   images["redChest"] = loadImage('./images/RedChest.png');
   images["shield"] = loadImage('./images/shield.png');
   images["heart"] = loadImage('./images/heart.png');
+  images["fight"] = loadImage('./images/fight.png');
   images["coins"] = loadImage('./images/coins.png');
   images["settings"] = loadImage('./images/settings.png');
   images["shop"] = loadImage('./images/shop.png');
@@ -75,6 +76,7 @@ function drawCombatWindow() {
   fill(20, 220);
   stroke(255);
   rect(x, y, w, h, 10);
+  image(images["fight"], x + 245, y + 180, 115, 75);
   noStroke();
   fill(255);
   textAlign(CENTER);
