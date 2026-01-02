@@ -23,7 +23,7 @@ let blueKey = 0;
 let redKey = 0;
 let gold = 0;
 let exp = 0;
-const COMBAT_INTERVAL = 1000; // ms
+const COMBAT_INTERVAL = 1000;
 
 function preload() {
   images["FenorisL1"] = loadImage('./images/FenorisL1Hit.png');

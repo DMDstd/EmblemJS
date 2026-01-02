@@ -117,7 +117,7 @@ function updateHoverTarget(enemies) {
     ) {
       currentTarget = enemy;
       return; // first enemy only
-    } else {
+    } else {//test
       currentTarget = null;
     }
   }
