@@ -1,5 +1,5 @@
 const ENTITY_TYPES = {
-  0: {
+    0: {
     name: "Yellow Key",
     img: "yellowKey",
     inter: "collectable",
@@ -40,7 +40,7 @@ const ENTITY_TYPES = {
     img: "redChest",
     inter: "container",
     goldGain: 50
-  },
+  }
 };
 
 function startInteraction(entity) {
