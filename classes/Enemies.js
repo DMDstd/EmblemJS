@@ -104,31 +104,14 @@ function endCombat(victory) {
   }
 }
 
-function updateHoverTarget(enemies) {
-  currentTarget = null;
-  const mx = mouseX - UI_WIDTH;
-  const my = mouseY;
-  for (let enemy of enemies) {
-    if (
-      mx >= enemy.x &&
-      mx <= enemy.x + T_S &&
-      my >= enemy.y &&
-      my <= enemy.y + T_S
-    ) {
-      currentTarget = enemy;
-      return; // first enemy only
-    } else {//test
-      currentTarget = null;
-    }
-  }
-}
-
 class Enemy {
-  constructor(x, y, type, key) {
+  constructor(x, y, w, h, type, key) {
     let cfg = ENEMY_TYPES[type];
     this.key = key;
     this.x = x;
     this.y = y;
+    this.w = w;
+    this.h = h;
     this.name = cfg.name;
     this.goldGain = cfg.goldGain;
     this.expGain = cfg.expGain;
@@ -138,7 +121,7 @@ class Enemy {
     this.img = images[cfg.img];
   }
   show() {
-    image(this.img, this.x, this.y, T_S, T_S);
+    image(this.img, this.x, this.y, this.w, this.h);
   }
   attack(player) {
     if((this.atk - player.def)>=0)player.hp -= (this.atk - player.def);

@@ -3,13 +3,14 @@ let water = [];
 let stairs = [];
 let triggers = [];
 let floor = [];
+let buttons = [];
 let images = {};
 let player;
 let keys = {};
 let loopCount = 0;
 let currentTrack = "P1";
 const T_S = 59;
-let currentLevel = 1;
+let currentLevel = 10;
 let defeatedEnemies = {};
 let despawnedEntities = {};
 const UI_WIDTH = 381;
@@ -17,6 +18,9 @@ let gameState = "explore";
 let currentEnemy = null;
 let currentEntity = null;
 let currentTarget = null;
+let currentTargetSwitch = null;
+let shop = 0;
+let sett = 0;
 let lastCombatTick = 0;
 let yellowKey = 0;
 let blueKey = 0;
@@ -58,6 +62,8 @@ function preload() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
   player = new Player(T_S, T_S, T_S/1.3, images["FenorisL1"], images["FenorisR1"]);
+  buttons.push(new Button(-360, 10, 30, 30, "settings", "sett"));
+  buttons.push(new Button(-320, 10, 30, 30, "shop", "shop"));
   loadLevel(currentLevel);
 }
 
@@ -66,6 +72,26 @@ function loadLevel(n) {
   generateLevel(lvl.terrain);
   generateEnemies(lvl.enemies, n);
   generateEntities(lvl.entities, n);
+}
+
+function settUI() {
+  const w = 1200;
+  const h = 800;
+  const x = windowWidth / 2 - UI_WIDTH;
+  const y = windowHeight / 2 - UI_WIDTH / 2;
+  fill(20, 220);
+  stroke(255);
+  rect(x, y, w, h, 10);
+}
+
+function shopUI() {
+  const w = 600;
+  const h = 300;
+  const x = windowWidth / 2 - UI_WIDTH;
+  const y = windowHeight / 2 - UI_WIDTH / 2;
+  fill(20, 220);
+  stroke(255);
+  rect(x, y, w, h, 10);
 }
 
 function drawCombatWindow() {
@@ -101,7 +127,7 @@ function drawUI() {
   fill(255);
   textSize(16);
   text(`Floor: ${currentLevel}`, 20, 60);
-  image(images["FenorisR1"], 150, 20, 200, 300);
+  image(images["FenorisR1"], 150, 50, 200, 300);
   text("Fenoris", 20, 100);
   textSize(14);
   image(images["heart"], 20, 110, 30, 30);
@@ -120,7 +146,7 @@ function drawUI() {
   text(": " + blueKey, 84, 320);
   image(images["redKey"], 20, 330, 60, 30);
   text(": " + redKey, 84, 350);
-  if(currentTarget) {
+  if(currentTarget && currentTargetSwitch == 1) {
     textSize(16);
   image(currentTarget.img, 150, 490, 100, 100);
   text(`${currentTarget.name}`, 20, 500);
@@ -177,11 +203,24 @@ function draw() {
   for (let e of entities) {
     e.show();
   }
+  for (let b of buttons) {
+    b.draw();
+  }
   player.draw();
   player.hitbox();
   if (gameState === "explore") {
-    updateHoverTarget(enemies);
+    updateHoverTarget(enemies, buttons);
   }
+  if (currentTarget && currentTargetSwitch == 3 && mouseIsPressed) {
+    shop = 1;
+    gameState = "INUI"
+  }
+  if (currentTarget && currentTargetSwitch == 2 && mouseIsPressed) {
+    sett = 1;
+    gameState = "INUI"
+  }
+  if (shop == 1)shopUI();
+  if (sett == 1)settUI();
   if (gameState === "combat") {
     updateCombat();
     drawCombatWindow();
@@ -198,6 +237,43 @@ function draw() {
     text("RESPAWN", windowWidth / 3.3, windowHeight / 2);
     textAlign(LEFT);
   } 
+}
+
+function updateHoverTarget(enemies, buttons) {
+  currentTarget = null;
+  const mx = mouseX - UI_WIDTH;
+  const my = mouseY;
+  for (let enemy of enemies) {
+    if (
+      mx >= enemy.x &&
+      mx <= enemy.x + enemy.w &&
+      my >= enemy.y &&
+      my <= enemy.y + enemy.h
+    ) {
+      currentTarget = enemy;
+      currentTargetSwitch = 1;
+      return;
+    }
+  }
+  for (let button of buttons) {
+    if (
+      mx >= button.x &&
+      mx <= button.x + button.w &&
+      my >= button.y &&
+      my <= button.y + button.h
+    ) {
+      if(button.t == "sett") {
+        currentTarget = button;
+        currentTargetSwitch = 2;
+        return;
+      }
+      currentTarget = button;
+      currentTargetSwitch = 3;
+      return;
+    }
+  }
+  currentTarget = null;
+  currentTargetSwitch = null;
 }
 
 function changeLevel(d, x, y) {
@@ -248,25 +324,25 @@ function generateEnemies(map, levelNum) {
       let py = y * T_S;
       let key = `${levelNum}-${x}-${y}`;
       if (tile === "0" && !defeatedEnemies[key]) {
-        enemies.push(new Enemy(px, py, 0, key));
+        enemies.push(new Enemy(px, py, T_S, T_S, 0, key));
       }
       if (tile === "1" && !defeatedEnemies[key]) {
-        enemies.push(new Enemy(px, py, 1, key));
+        enemies.push(new Enemy(px, py, T_S, T_S, 1, key));
       }
       if (tile === "2" && !defeatedEnemies[key]) {
-        enemies.push(new Enemy(px, py, 2, key));
+        enemies.push(new Enemy(px, py, T_S, T_S, 2, key));
       }
       if (tile === "3" && !defeatedEnemies[key]) {
-        enemies.push(new Enemy(px, py, 3, key));
+        enemies.push(new Enemy(px, py, T_S, T_S, 3, key));
       }
       if (tile === "4" && !defeatedEnemies[key]) {
-        enemies.push(new Enemy(px, py, 4, key));
+        enemies.push(new Enemy(px, py, T_S, T_S, 4, key));
       }
       if (tile === "5" && !defeatedEnemies[key]) {
-        enemies.push(new Enemy(px, py, 5, key));
+        enemies.push(new Enemy(px, py, T_S, T_S, 5, key));
       }
       if (tile === "6" && !defeatedEnemies[key]) {
-        enemies.push(new Enemy(px, py, 6, key));
+        enemies.push(new Enemy(px, py, T_S, T_S, 6, key));
       }
     }
   }
