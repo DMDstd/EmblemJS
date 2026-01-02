@@ -57,7 +57,7 @@ const ENEMY_TYPES = {
     name: "Yellow Slime",
     hp: 20,
     atk: 4,
-    def: 4,
+    def: 400,
     img: "YellowSlime",
     goldGain: 2,
     expGain: 2
