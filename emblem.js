@@ -30,6 +30,7 @@ let exp = 0;
 let PlayerHP = 100;
 let PlayerAtk = 10;
 let PlayerDef = 10;
+let statOffset = 0;
 const COMBAT_INTERVAL = 1000;
 let combatResult = {
   victory: false,
@@ -37,7 +38,6 @@ let combatResult = {
 };
 
 function preload() {
-
   images["FenorisL1"] = loadImage('./images/FenorisL1Hit.png');
   images["FenorisR1"] = loadImage('./images/FenorisR1Hit.png');
   images["stone"] = loadImage('./images/Stone2.png');
@@ -202,22 +202,37 @@ function drawUI() {
   image(images["heart"], 20, 510, 30, 30);
   text(`: ${currentTarget.hp}`, 54, 530);
   image(images["sword"], 20, 540, 30, 30);
-  text(`: ${currentTarget.atk}`, 54, 560);
+  text(`: ${currentTarget.hp}`, 54, 560);
   image(images["shield"], 20, 570, 30, 30);
   text(`: ${currentTarget.def}`, 54, 590);
   }
-  if(currentTarget && currentTargetSwitch == 1) {
+  if(currentTarget && currentTargetSwitch == 4) {
     textSize(16);
-  image(currentTarget.img, 150, 490, 100, 100);
+  image(currentTarget.img, 150, 490, currentTarget.w*3, currentTarget.h*3);
   text(`${currentTarget.name}`, 20, 500);
   textSize(14);
-  image(images["heart"], 20, 510, 30, 30);
-  text(`: +30`, 54, 530);
-  image(images["sword"], 20, 540, 30, 30);
-  text(`: +3`, 54, 560);
-  image(images["shield"], 20, 570, 30, 30);
-  text(`: +3`, 54, 590);
+  if (currentTarget.hp != 0) {
+    image(images["heart"], 20, 510, 30, 30);
+    text(`: +${currentTarget.hp}`, 54, 530);
+    statOffset+=30;
   }
+  if (currentTarget.atk != 0) {
+    image(images["sword"], 20, 510 + statOffset, 30, 30);
+    text(`: +${currentTarget.atk}`, 54, 530 + statOffset);
+    statOffset+=30;
+  }
+  if (currentTarget.def != 0) {
+    image(images["shield"], 20, 510 + statOffset, 30, 30);
+    text(`: +${currentTarget.def}`, 54, 530 + statOffset);
+    statOffset+=30;
+  }
+  if (currentTarget.goldGain != 0) {
+    image(images["coins"], 20, 510 + statOffset, 30, 30);
+    text(`: +${currentTarget.goldGain}`, 54, 530 + statOffset);
+    statOffset+=30;
+  }
+  }
+  statOffset = 0;
   stroke(80);
   line(UI_WIDTH - 10, 0, UI_WIDTH - 10, windowHeight);
 }
@@ -330,15 +345,17 @@ function updateHoverTarget(enemies, buttons, entities) {
     }
   }
   for (let entity of entities) {
-    if (
+    if (entity.inter == "container") {
+      if (
       mx >= entity.x &&
       mx <= entity.x + entity.w &&
       my >= entity.y &&
       my <= entity.y + entity.h
     ) {
       currentTarget = entity;
-      currentTargetSwitch = 1;
+      currentTargetSwitch = 4;
       return;
+    }
     }
   }
   for (let button of buttons) {

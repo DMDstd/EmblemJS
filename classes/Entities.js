@@ -48,7 +48,7 @@ const ENTITY_TYPES = {
     name: "Blue Chest",
     img: "blueChest",
     inter: "container",
-    hp: 0,
+    hp: 10,
     atk: 0,
     def: 0,
     goldGain: 25
@@ -90,54 +90,54 @@ const ENTITY_TYPES = {
     goldGain: 0
   },
   a:{
-    name: "GateYellow",
+    name: "Yellow Gate",
     img: "GateY",
-    inter: "container",
+    inter: "gate",
     hp: 0,
     atk: 0,
     def: 0,
     goldGain: 0
   },
   b:{
-    name: "GateBlue",
+    name: "Blue Gate",
     img: "GateB",
-    inter: "container",
+    inter: "gate",
     hp: 0,
     atk: 0,
     def: 0,
     goldGain: 0
   },
   c:{
-    name: "GateRed",
+    name: "Red Gate",
     img: "GateR",
-    inter: "container",
+    inter: "gate",
     hp: 0,
     atk: 0,
     def: 0,
     goldGain: 0
   },
   d:{
-    name: "GateYellow2",
+    name: "Yellow Gate 2",
     img: "GateY2",
-    inter: "container",
+    inter: "gate",
     hp: 0,
     atk: 0,
     def: 0,
     goldGain: 0
   },
   e:{
-    name: "GateBlue2",
+    name: "Blue Gate 2",
     img: "GateB2",
-    inter: "container",
+    inter: "gate",
     hp: 0,
     atk: 0,
     def: 0,
     goldGain: 0
   },
   f:{
-    name: "GateRed2",
+    name: "Red Gate 2",
     img: "GateR2",
-    inter: "container",
+    inter: "gate",
     hp: 0,
     atk: 0,
     def: 0,
@@ -146,16 +146,16 @@ const ENTITY_TYPES = {
   g:{
     name: "Gate",
     img: "Gate",
-    inter: "container",
+    inter: "gate",
     hp: 0,
     atk: 0,
     def: 0,
     goldGain: 0
   },
   h:{
-    name: "Gate2",
+    name: "Gate 2",
     img: "Gate2",
-    inter: "container",
+    inter: "gate",
     hp: 0,
     atk: 0,
     def: 0,
@@ -195,32 +195,35 @@ function startInteraction(entity, player) {
       player.hp += entity.hp;
     } else if (entity.name === "Attack Potion") {
       player.atk += entity.atk;
-    }else if (entity.name === "GateYellow") {
+    }
+  }
+  if (entity.inter === "gate") {
+    if (entity.name === "Yellow Gate") {
       if (yellowKey > 0) {
         yellowKey--;
       }
       else return 0;
-    }else if (entity.name === "GateBlue") {
+    }else if (entity.name === "Blue Gate") {
       if (blueKey > 0) {
         blueKey--;
       }
       else return 0;
-    }else if (entity.name === "GateRed") {
+    }else if (entity.name === "Red Gate") {
       if (redKey > 0) {
         redKey--;
       }
       else return 0;
-    }else if (entity.name === "GateYellow2") {
+    }else if (entity.name === "Yellow Gate 2") {
       if (yellowKey > 0) {
         yellowKey--;
       }
       else return 0;
-    }else if (entity.name === "GateBlue2") {
+    }else if (entity.name === "Blue Gate 2") {
       if (blueKey > 0) {
         blueKey--;
       }
       else return 0;
-    }else if (entity.name === "GateRed2") {
+    }else if (entity.name === "Red Gate 2") {
       if (redKey > 0) {
         redKey--;
       }
