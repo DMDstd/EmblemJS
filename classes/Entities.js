@@ -60,20 +60,26 @@ const ENTITY_TYPES = {
     goldGain: 0
   },
   a:{
+    name: "GateYellow",
+    img: "GateY",
+    inter: "container",
+    goldGain: 0
+  },
+  b:{
     name: "GateBlue",
     img: "GateB",
     inter: "container",
     goldGain: 0
   },
-  b:{
+  c:{
     name: "GateRed",
-    img: "Gater",
+    img: "GateR",
     inter: "container",
     goldGain: 0
   },
-  c:{
-    name: "GateYellow",
-    img: "GateY",
+  g:{
+    name: "Gate",
+    img: "Gate",
     inter: "container",
     goldGain: 0
   }

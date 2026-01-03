@@ -31,6 +31,10 @@ let PlayerHP = 100;
 let PlayerAtk = 10;
 let PlayerDef = 10;
 const COMBAT_INTERVAL = 1000;
+let combatResult = {
+  victory: false,
+  startTime: 0
+};
 
 function preload() {
 
@@ -86,23 +90,23 @@ function loadLevel(n) {
 }
 
 function settUI() {
-  const w = 1200;
-  const h = 800;
-  const x = windowWidth / 2 - UI_WIDTH;
-  const y = windowHeight / 2 - UI_WIDTH / 2;
+  const w = windowWidth - UI_WIDTH;
+  const h = windowHeight;
+  const x = 0;
+  const y = 0;
+  noStroke();
   fill(20, 220);
-  stroke(255);
-  rect(x, y, w, h, 10);
+  rect(x, y, w, h);
 }
 
 function shopUI() {
-  const w = 600;
-  const h = 300;
-  const x = windowWidth / 2 - UI_WIDTH;
-  const y = windowHeight / 2 - UI_WIDTH / 2;
+  const w = windowWidth - UI_WIDTH;
+  const h = windowHeight;
+  const x = 0;
+  const y = 0;
+  noStroke();
   fill(20, 220);
-  stroke(255);
-  rect(x, y, w, h, 10);
+  rect(x, y, w, h);
 }
 
 function drawCombatWindow() {
@@ -126,6 +130,36 @@ function drawCombatWindow() {
     x + w / 2,
     y + 80
   );
+  image(images["FenorisR1"], x + w / 8, y + 180, T_S, T_S);
+  image(currentEnemy.img, x + w / 1.3, y + 180, T_S, T_S);
+  textAlign(LEFT);
+}
+function combatResultWindow(victory) {
+  const w = 600;
+  const h = 300;
+  const x = windowWidth / 2 - UI_WIDTH;
+  const y = windowHeight / 2 - UI_WIDTH / 2;
+  fill(20, 220);
+  stroke(255);
+  rect(x, y, w, h, 10);
+  image(images["fight"], x + 245, y + 180, 115, 75);
+  noStroke();
+  fill(255);
+  textAlign(CENTER);
+  textSize(16);
+  if(victory == 1) {
+    text("VICTORY", x + w / 2, y + 30);
+    textSize(14);
+    text(
+      `Gold gained: ${currentEnemy.goldGain}\n` +
+      `XP gained: ${currentEnemy.expGain}`,
+      x + w / 2,
+      y + 80
+    );
+  } else {
+    text("DEFEAT", x + w / 2, y + 30);
+    text("You have fallen...", x + w / 2, y + 80);
+  }
   image(images["FenorisR1"], x + w / 8, y + 180, T_S, T_S);
   image(currentEnemy.img, x + w / 1.3, y + 180, T_S, T_S);
   textAlign(LEFT);
@@ -236,6 +270,20 @@ function draw() {
     updateCombat();
     drawCombatWindow();
   }
+  if (gameState === "combatResult") {
+    if (combatResult.victory) {
+      combatResultWindow(1);
+    } else {
+      combatResultWindow(0);
+    }
+  if (millis() - combatResult.startTime > 2000) {
+    if (combatResult.victory) {
+      gameState = "explore";
+    } else {
+      gameState = "gameover";
+    }
+  }
+}
   if (gameState === "gameover") {
     noStroke();
     background(0);
@@ -401,10 +449,13 @@ function generateEntities(map, levelNum) {
         entities.push(new Entity(px, py, T_S, T_S, "a", key));
       }
       if (tile === "b" && !despawnedEntities[key]) {
-        entities.push(new Entity(px, py, T_S, T_S, "c", key));
+        entities.push(new Entity(px, py, T_S, T_S, "b", key));
       }
       if (tile === "c" && !despawnedEntities[key]) {
         entities.push(new Entity(px, py, T_S, T_S, "c", key));
+      }
+      if (tile === "g" && !despawnedEntities[key]) {
+        entities.push(new Entity(px, py, T_S, T_S, "g", key));
       }
     }
   }

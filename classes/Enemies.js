@@ -29,8 +29,8 @@ const ENEMY_TYPES = {
     3: {
     name: "Pink Slime",
     hp: 20,
-    atk: 4,
-    def: 4,
+    atk: 10,
+    def: 10,
     img: "PinkSlime",
     goldGain: 2,
     expGain: 3
@@ -76,6 +76,11 @@ function updateCombat() {
   lastCombatTick = millis();
   // Enemy → Player
   let dmgToPlayer = currentEnemy.atk - player.def;
+  if (dmgToPlayer <= 0 && dmgToEnemy <= 0){
+    player.hp = 0;
+    endCombat(false);
+    return;
+  }
   if (dmgToPlayer >= 0) {
     player.hp -= dmgToPlayer;
   }
@@ -88,19 +93,20 @@ function updateCombat() {
   if (currentEnemy.hp <= 0) {
     endCombat(true);
   } else if (player.hp <= 0) {
+    player.hp = 0;
     endCombat(false);
   }
 }
 
 function endCombat(victory) {
+  gameState = "combatResult";
+  combatResult.startTime = millis();
+  combatResult.victory = victory;
   if (victory) {
     gold += currentEnemy.goldGain;
     exp += currentEnemy.expGain;
     currentEnemy.die();
     enemies = enemies.filter(e => e !== currentEnemy);
-    gameState = "explore";
-  } else {
-    gameState = "gameover";
   }
 }
 
