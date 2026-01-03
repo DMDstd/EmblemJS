@@ -10,7 +10,7 @@ let keys = {};
 let loopCount = 0;
 let currentTrack = "P1";
 const T_S = 59;
-let currentLevel = 2;
+let currentLevel = 1;
 let defeatedEnemies = {};
 let despawnedEntities = {};
 const UI_WIDTH = 381;
@@ -399,6 +399,12 @@ function generateEntities(map, levelNum) {
       }
       if (tile === "a" && !despawnedEntities[key]) {
         entities.push(new Entity(px, py, T_S, T_S, "a", key));
+      }
+      if (tile === "b" && !despawnedEntities[key]) {
+        entities.push(new Entity(px, py, T_S, T_S, "c", key));
+      }
+      if (tile === "c" && !despawnedEntities[key]) {
+        entities.push(new Entity(px, py, T_S, T_S, "c", key));
       }
     }
   }
