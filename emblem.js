@@ -152,16 +152,9 @@ function combatResultWindow(victory) {
     image(images["coins"], x + w / 2 - 20, y + 60, 30, 30);
     textSize(14);
     text(
-      `: ${currentEnemy.goldGain}\n`,
-      x + w / 2 + 20,
-      y + 80
-    );
+      `: ${currentEnemy.goldGain}\n`,x + w / 2 + 20,y + 80);
     image(images["XP"], x + w / 2 - 20, y + 100, 30, 30);
-    text(
-      `: ${currentEnemy.expGain}`,
-      x + w / 2 + 20,
-      y + 120
-    );
+    text(`: ${currentEnemy.expGain}`,x + w / 2 + 20,y + 120);
   } else {
     text("DEFEAT", x + w / 2, y + 30);
     text("You have fallen...", x + w / 2, y + 80);
