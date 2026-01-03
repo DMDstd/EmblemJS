@@ -77,9 +77,33 @@ const ENTITY_TYPES = {
     inter: "container",
     goldGain: 0
   },
+  d:{
+    name: "GateYellow2",
+    img: "GateY2",
+    inter: "container",
+    goldGain: 0
+  },
+  e:{
+    name: "GateBlue2",
+    img: "GateB2",
+    inter: "container",
+    goldGain: 0
+  },
+  f:{
+    name: "GateRed2",
+    img: "GateR2",
+    inter: "container",
+    goldGain: 0
+  },
   g:{
     name: "Gate",
     img: "Gate",
+    inter: "container",
+    goldGain: 0
+  },
+  h:{
+    name: "Gate2",
+    img: "Gate2",
     inter: "container",
     goldGain: 0
   }
@@ -117,6 +141,11 @@ function startInteraction(entity, player) {
       player.hp += 30;
     } else if (entity.name === "Attack Potion") {
       player.atk += 3;
+    }else if (entity.name === "GateYellow") {
+      if (yellowKey > 0) {
+        yellowKey--;
+      }
+      else return 0;
     }else if (entity.name === "GateBlue") {
       if (blueKey > 0) {
         blueKey--;
@@ -127,12 +156,23 @@ function startInteraction(entity, player) {
         redKey--;
       }
       else return 0;
-    }else if (entity.name === "GateYellow") {
+    }else if (entity.name === "GateYellow2") {
       if (yellowKey > 0) {
         yellowKey--;
       }
       else return 0;
+    }else if (entity.name === "GateBlue2") {
+      if (blueKey > 0) {
+        blueKey--;
+      }
+      else return 0;
+    }else if (entity.name === "GateRed2") {
+      if (redKey > 0) {
+        redKey--;
+      }
+      else return 0;
     }
+    
   }
   entity.despawn();
   entities = entities.filter(e => e !== entity);
