@@ -76,11 +76,6 @@ function updateCombat() {
   lastCombatTick = millis();
   // Enemy → Player
   let dmgToPlayer = currentEnemy.atk - player.def;
-  if (dmgToPlayer <= 0 && dmgToEnemy <= 0){
-    player.hp = 0;
-    endCombat(false);
-    return;
-  }
   if (dmgToPlayer >= 0) {
     player.hp -= dmgToPlayer;
   }
@@ -93,6 +88,9 @@ function updateCombat() {
   if (currentEnemy.hp <= 0) {
     endCombat(true);
   } else if (player.hp <= 0) {
+    player.hp = 0;
+    endCombat(false);
+  } else if (dmgToPlayer <= 0 && dmgToEnemy <= 0){
     player.hp = 0;
     endCombat(false);
   }
