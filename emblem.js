@@ -149,12 +149,18 @@ function combatResultWindow(victory) {
   textSize(16);
   if(victory == 1) {
     text("VICTORY", x + w / 2, y + 30);
+    image(images["coins"], x + w / 2 - 20, y + 60, 30, 30);
     textSize(14);
     text(
-      `Gold gained: ${currentEnemy.goldGain}\n` +
-      `XP gained: ${currentEnemy.expGain}`,
-      x + w / 2,
+      `: ${currentEnemy.goldGain}\n`,
+      x + w / 2 + 20,
       y + 80
+    );
+    image(images["XP"], x + w / 2 - 20, y + 100, 30, 30);
+    text(
+      `: ${currentEnemy.expGain}`,
+      x + w / 2 + 20,
+      y + 120
     );
   } else {
     text("DEFEAT", x + w / 2, y + 30);
