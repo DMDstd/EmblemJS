@@ -58,6 +58,24 @@ const ENTITY_TYPES = {
     img: "defBottle",
     inter: "container",
     goldGain: 0
+  },
+  a:{
+    name: "GateBlue",
+    img: "GateB",
+    inter: "container",
+    goldGain: 0
+  },
+  b:{
+    name: "GateRed",
+    img: "Gater",
+    inter: "container",
+    goldGain: 0
+  },
+  c:{
+    name: "GateYellow",
+    img: "GateY",
+    inter: "container",
+    goldGain: 0
   }
 };
 
@@ -93,6 +111,21 @@ function startInteraction(entity, player) {
       player.hp += 30;
     } else if (entity.name === "Attack Potion") {
       player.atk += 3;
+    }else if (entity.name === "GateBlue") {
+      if (blueKey > 0) {
+        blueKey--;
+      }
+      else return 0;
+    }else if (entity.name === "GateRed") {
+      if (redKey > 0) {
+        redKey--;
+      }
+      else return 0;
+    }else if (entity.name === "GateYellow") {
+      if (yellowKey > 0) {
+        yellowKey--;
+      }
+      else return 0;
     }
   }
   entity.despawn();

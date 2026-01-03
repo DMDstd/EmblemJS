@@ -10,7 +10,7 @@ let keys = {};
 let loopCount = 0;
 let currentTrack = "P1";
 const T_S = 59;
-let currentLevel = 1;
+let currentLevel = 2;
 let defeatedEnemies = {};
 let despawnedEntities = {};
 const UI_WIDTH = 381;
@@ -33,6 +33,7 @@ let PlayerDef = 10;
 const COMBAT_INTERVAL = 1000;
 
 function preload() {
+
   images["FenorisL1"] = loadImage('./images/FenorisL1Hit.png');
   images["FenorisR1"] = loadImage('./images/FenorisR1Hit.png');
   images["stone"] = loadImage('./images/Stone2.png');
@@ -63,6 +64,10 @@ function preload() {
   images["defBottle"] = loadImage('./images/defBottle.png');
   images["hpBottle"] = loadImage('./images/hpBottle.png');
   images["atkBottle"] = loadImage('./images/atkBottle.png');
+  images["Gate"] = loadImage('./images/Gate.png');
+  images["GateB"] = loadImage('./images/GateB.png');
+  images["GateR"] = loadImage('./images/GateR.png');
+  images["GateY"] = loadImage('./images/GateY.png');
 }
 
 function setup() {
@@ -391,6 +396,9 @@ function generateEntities(map, levelNum) {
       }
       if (tile === "9" && !despawnedEntities[key]) {
         entities.push(new Entity(px + T_S/4, py + T_S/6, 30, 48, 9, key));
+      }
+      if (tile === "a" && !despawnedEntities[key]) {
+        entities.push(new Entity(px, py, T_S, T_S, "a", key));
       }
     }
   }
