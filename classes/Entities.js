@@ -3,108 +3,162 @@ const ENTITY_TYPES = {
     name: "Yellow Key",
     img: "yellowKey",
     inter: "collectable",
+    hp: 0,
+    atk: 0,
+    def: 0,
     goldGain: 0
   },
     1: {
     name: "Yellow Key",
     img: "yellowKey",
     inter: "collectable",
+    hp: 0,
+    atk: 0,
+    def: 0,
     goldGain: 0
   },
     2: {
     name: "Blue Key",
     img: "blueKey",
     inter: "collectable",
+    hp: 0,
+    atk: 0,
+    def: 0,
     goldGain: 0
   },
     3: {
     name: "Red Key",
     img: "redKey",
     inter: "collectable",
+    hp: 0,
+    atk: 0,
+    def: 0,
     goldGain: 0
   },
     4: {
     name: "Yellow Chest",
     img: "yellowChest",
     inter: "container",
+    hp: 0,
+    atk: 0,
+    def: 0,
     goldGain: 10
   },
     5: {
     name: "Blue Chest",
     img: "blueChest",
     inter: "container",
+    hp: 0,
+    atk: 0,
+    def: 0,
     goldGain: 25
   },
     6: {
     name: "Red Chest",
     img: "redChest",
     inter: "container",
+    hp: 0,
+    atk: 0,
+    def: 0,
     goldGain: 50
   },
     7: {
     name: "HP Potion",
     img: "hpBottle",
     inter: "container",
+    hp: 30,
+    atk: 0,
+    def: 0,
     goldGain: 0
   },
     8: {
     name: "Attack Potion",
     img: "atkBottle",
     inter: "container",
+    hp: 0,
+    atk: 3,
+    def: 0,
     goldGain: 0
   },
     9: {
     name: "Defence Potion",
     img: "defBottle",
     inter: "container",
+    hp: 0,
+    atk: 0,
+    def: 3,
     goldGain: 0
   },
   a:{
     name: "GateYellow",
     img: "GateY",
     inter: "container",
+    hp: 0,
+    atk: 0,
+    def: 0,
     goldGain: 0
   },
   b:{
     name: "GateBlue",
     img: "GateB",
     inter: "container",
+    hp: 0,
+    atk: 0,
+    def: 0,
     goldGain: 0
   },
   c:{
     name: "GateRed",
     img: "GateR",
     inter: "container",
+    hp: 0,
+    atk: 0,
+    def: 0,
     goldGain: 0
   },
   d:{
     name: "GateYellow2",
     img: "GateY2",
     inter: "container",
+    hp: 0,
+    atk: 0,
+    def: 0,
     goldGain: 0
   },
   e:{
     name: "GateBlue2",
     img: "GateB2",
     inter: "container",
+    hp: 0,
+    atk: 0,
+    def: 0,
     goldGain: 0
   },
   f:{
     name: "GateRed2",
     img: "GateR2",
     inter: "container",
+    hp: 0,
+    atk: 0,
+    def: 0,
     goldGain: 0
   },
   g:{
     name: "Gate",
     img: "Gate",
     inter: "container",
+    hp: 0,
+    atk: 0,
+    def: 0,
     goldGain: 0
   },
   h:{
     name: "Gate2",
     img: "Gate2",
     inter: "container",
+    hp: 0,
+    atk: 0,
+    def: 0,
     goldGain: 0
   }
 };
@@ -136,11 +190,11 @@ function startInteraction(entity, player) {
       }
       else return 0;
     } else if (entity.name === "Defence Potion") {
-      player.def += 3;
+      player.def += entity.def;
     } else if (entity.name === "HP Potion") {
-      player.hp += 30;
+      player.hp += entity.hp;
     } else if (entity.name === "Attack Potion") {
-      player.atk += 3;
+      player.atk += entity.atk;
     }else if (entity.name === "GateYellow") {
       if (yellowKey > 0) {
         yellowKey--;
@@ -187,6 +241,9 @@ class Entity {
     this.y = y;
     this.w = w;
     this.h = h;
+    this.hp = cfg.hp;
+    this.atk = cfg.atk;
+    this.def = cfg.def;
     this.goldGain = cfg.goldGain;
     this.inter = cfg.inter;
     this.name = cfg.name;

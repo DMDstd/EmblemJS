@@ -72,6 +72,10 @@ function preload() {
   images["GateB"] = loadImage('./images/GateB.png');
   images["GateR"] = loadImage('./images/GateR.png');
   images["GateY"] = loadImage('./images/GateY.png');
+  images["Gate2"] = loadImage('./images/Gate2.png');
+  images["GateB2"] = loadImage('./images/GateB2.png');
+  images["GateR2"] = loadImage('./images/GateR2.png');
+  images["GateY2"] = loadImage('./images/GateY2.png');
 }
 
 function setup() {
@@ -202,6 +206,18 @@ function drawUI() {
   text(`: ${currentTarget.atk}`, 54, 560);
   image(images["shield"], 20, 570, 30, 30);
   text(`: ${currentTarget.def}`, 54, 590);
+  }
+  if(currentTarget && currentTargetSwitch == 1) {
+    textSize(16);
+  image(currentTarget.img, 150, 490, 100, 100);
+  text(`${currentTarget.name}`, 20, 500);
+  textSize(14);
+  image(images["heart"], 20, 510, 30, 30);
+  text(`: +30`, 54, 530);
+  image(images["sword"], 20, 540, 30, 30);
+  text(`: +3`, 54, 560);
+  image(images["shield"], 20, 570, 30, 30);
+  text(`: +3`, 54, 590);
   }
   stroke(80);
   line(UI_WIDTH - 10, 0, UI_WIDTH - 10, windowHeight);
@@ -466,8 +482,20 @@ function generateEntities(map, levelNum) {
       if (tile === "c" && !despawnedEntities[key]) {
         entities.push(new Entity(px, py, T_S, T_S, "c", key));
       }
+      if (tile === "d" && !despawnedEntities[key]) {
+        entities.push(new Entity(px, py, T_S, T_S, "d", key));
+      }
+      if (tile === "e" && !despawnedEntities[key]) {
+        entities.push(new Entity(px, py, T_S, T_S, "e", key));
+      }
+      if (tile === "f" && !despawnedEntities[key]) {
+        entities.push(new Entity(px, py, T_S, T_S, "f", key));
+      }
       if (tile === "g" && !despawnedEntities[key]) {
         entities.push(new Entity(px, py, T_S, T_S, "g", key));
+      }
+      if (tile === "h" && !despawnedEntities[key]) {
+        entities.push(new Entity(px, py, T_S, T_S, "h", key));
       }
     }
   }
