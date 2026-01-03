@@ -254,7 +254,7 @@ function draw() {
   player.draw();
   //player.hitbox();
   if (gameState === "explore") {
-    updateHoverTarget(enemies, buttons);
+    updateHoverTarget(enemies, buttons, entities);
   }
   if (currentTarget && currentTargetSwitch == 3 && mouseIsPressed) {
     shop = 1;
@@ -298,7 +298,7 @@ function draw() {
   } 
 }
 
-function updateHoverTarget(enemies, buttons) {
+function updateHoverTarget(enemies, buttons, entities) {
   currentTarget = null;
   const mx = mouseX - UI_WIDTH;
   const my = mouseY;
@@ -310,6 +310,18 @@ function updateHoverTarget(enemies, buttons) {
       my <= enemy.y + enemy.h
     ) {
       currentTarget = enemy;
+      currentTargetSwitch = 1;
+      return;
+    }
+  }
+  for (let entity of entities) {
+    if (
+      mx >= entity.x &&
+      mx <= entity.x + entity.w &&
+      my >= entity.y &&
+      my <= entity.y + entity.h
+    ) {
+      currentTarget = entity;
       currentTargetSwitch = 1;
       return;
     }
