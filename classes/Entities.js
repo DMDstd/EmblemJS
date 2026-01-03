@@ -48,7 +48,7 @@ const ENTITY_TYPES = {
     name: "Blue Chest",
     img: "blueChest",
     inter: "container",
-    hp: 10,
+    hp: 0,
     atk: 0,
     def: 0,
     goldGain: 25

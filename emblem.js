@@ -40,6 +40,7 @@ let combatResult = {
 function preload() {
   images["FenorisL1"] = loadImage('./images/FenorisL1Hit.png');
   images["FenorisR1"] = loadImage('./images/FenorisR1Hit.png');
+  images["bg"] = loadImage('./images/background.png');
   images["stone"] = loadImage('./images/Stone2.png');
   images["stairs"] = loadImage('./images/Stairs.png');
   images["GreenSlime"] = loadImage('./images/GreenSlime.png');
@@ -76,6 +77,7 @@ function preload() {
   images["GateB2"] = loadImage('./images/GateB2.png');
   images["GateR2"] = loadImage('./images/GateR2.png');
   images["GateY2"] = loadImage('./images/GateY2.png');
+  BossMusic = loadSound('./tracks/YouSeeBIGGIRLT_T.mp3');
 }
 
 function setup() {
@@ -202,7 +204,7 @@ function drawUI() {
   image(images["heart"], 20, 510, 30, 30);
   text(`: ${currentTarget.hp}`, 54, 530);
   image(images["sword"], 20, 540, 30, 30);
-  text(`: ${currentTarget.hp}`, 54, 560);
+  text(`: ${currentTarget.atk}`, 54, 560);
   image(images["shield"], 20, 570, 30, 30);
   text(`: ${currentTarget.def}`, 54, 590);
   }
@@ -238,7 +240,7 @@ function drawUI() {
 }
 
 function draw() {
-  background(0);
+  background(images["bg"]);
   drawUI();
   push();
   translate(UI_WIDTH, 0);
@@ -326,6 +328,17 @@ function draw() {
     text("RESPAWN", windowWidth / 3.3, windowHeight / 2);
     textAlign(LEFT);
   } 
+  if (currentLevel == 10 && currentTrack != "boss") {
+    BossMusic.play();
+    BossMusic.volume = 0.2;
+    currentTrack = "boss";
+  } else if (currentLevel != 10 && currentTrack == "boss") {
+    BossMusic.stop();
+    currentTrack = null;
+  }
+  if (currentLevel != 10 && currentTrack != "theme") {
+    themeMusic();
+  }
 }
 
 function updateHoverTarget(enemies, buttons, entities) {
@@ -522,6 +535,13 @@ function fightMusic() {
     currentTrack = "FM";
     const music = document.getElementById("FM");
     music.volume = 0.5;
+    music.play();
+}
+
+function bossMusic() {
+    currentTrack = "BS";
+    const music = document.getElementById("BS");
+    music.volume = 0.3;
     music.play();
 }
 
