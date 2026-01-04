@@ -37,9 +37,9 @@ const ENEMY_TYPES = {
   },
     4: {
     name: "Purple Slime",
-    hp: 20,
-    atk: 4,
-    def: 4,
+    hp: 250,
+    atk: 80,
+    def: 75,
     img: "PurpleSlime",
     goldGain: 2,
     expGain: 3
@@ -55,9 +55,9 @@ const ENEMY_TYPES = {
   },
     6: {
     name: "Yellow Slime",
-    hp: 20,
+    hp: 20000,
     atk: 4,
-    def: 4000,
+    def: 4,
     img: "YellowSlime",
     goldGain: 2,
     expGain: 3
@@ -66,10 +66,10 @@ const ENEMY_TYPES = {
     name: "The Chitin King",
     hp: 200000,
     atk: 5000,
-    def: 4000,
-    img: "YellowSlime",
-    goldGain: 2,
-    expGain: 3
+    def: 2000,
+    img: "SpiderKing",
+    goldGain: 0,
+    expGain: 0
   }
 };
 
@@ -94,11 +94,11 @@ function updateCombat() {
     currentEnemy.hp -= dmgToEnemy;
   }
   // Check outcomes
-  if (currentEnemy.hp <= 0) {
-    endCombat(true);
-  } else if (player.hp <= 0) {
+  if (player.hp <= 0) {
     player.hp = 0;
     endCombat(false);
+  } else if (currentEnemy.hp <= 0) {
+    endCombat(true);
   } else if (dmgToPlayer <= 0 && dmgToEnemy <= 0){
     player.hp = 0;
     endCombat(false);

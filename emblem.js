@@ -50,6 +50,7 @@ function preload() {
   images["RedSlime"] = loadImage('./images/RedSlime.png');
   images["WhiteSlime"] = loadImage('./images/WhiteSlime.png');
   images["YellowSlime"] = loadImage('./images/YellowSlime.png');
+  images["SpiderKing"] = loadImage('./images/BigSpider.png');
   images["bricks"] = loadImage('./images/Bricks.png');
   images["yellowKey"] = loadImage('./images/YellowKey.png');
   images["blueKey"] = loadImage('./images/BlueKey.png');
@@ -455,7 +456,7 @@ function generateEnemies(map, levelNum) {
         enemies.push(new Enemy(px, py, T_S, T_S, 6, key));
       }
       if (tile === "Z" && !defeatedEnemies[key]) {
-        enemies.push(new Enemy(px, py, T_S*4, T_S*4, 7, key));
+        enemies.push(new Enemy(px, py, T_S*4, T_S*6, 7, key));
       }
     }
   }
