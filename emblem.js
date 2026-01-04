@@ -7,10 +7,10 @@ let buttons = [];
 let images = {};
 let player;
 let keys = {};
-let loopCount = 0;
-let currentTrack = "P1";
+let musicVolume = 0.5;
+let currentTrack = null;
 const T_S = 59;
-let currentLevel = 1;
+let currentLevel = 9;
 let defeatedEnemies = {};
 let despawnedEntities = {};
 const UI_WIDTH = 381;
@@ -77,7 +77,9 @@ function preload() {
   images["GateB2"] = loadImage('./images/GateB2.png');
   images["GateR2"] = loadImage('./images/GateR2.png');
   images["GateY2"] = loadImage('./images/GateY2.png');
-  BossMusic = loadSound('./tracks/YouSeeBIGGIRLT_T.mp3');
+  BossMusic = loadSound('./tracks/BossMusic.m4a');
+  FightMusic = loadSound('./tracks/Combat.m4a');
+  StrollMusic = loadSound('./tracks/stroll_track.wav');
 }
 
 function setup() {
@@ -328,17 +330,7 @@ function draw() {
     text("RESPAWN", windowWidth / 3.3, windowHeight / 2);
     textAlign(LEFT);
   } 
-  if (currentLevel == 10 && currentTrack != "boss") {
-    BossMusic.play();
-    BossMusic.volume = 0.2;
-    currentTrack = "boss";
-  } else if (currentLevel != 10 && currentTrack == "boss") {
-    BossMusic.stop();
-    currentTrack = null;
-  }
-  if (currentLevel != 10 && currentTrack != "theme") {
-    themeMusic();
-  }
+  updateMusic();
 }
 
 function updateHoverTarget(enemies, buttons, entities) {
@@ -460,6 +452,9 @@ function generateEnemies(map, levelNum) {
       if (tile === "6" && !defeatedEnemies[key]) {
         enemies.push(new Enemy(px, py, T_S, T_S, 6, key));
       }
+      if (tile === "Z" && !defeatedEnemies[key]) {
+        enemies.push(new Enemy(px, py, T_S*4, T_S*4, 7, key));
+      }
     }
   }
 }
@@ -530,49 +525,28 @@ function generateEntities(map, levelNum) {
   }
 }
 
-
-function fightMusic() {
-    currentTrack = "FM";
-    const music = document.getElementById("FM");
-    music.volume = 0.5;
-    music.play();
+function stopAllMusic() {
+  if (BossMusic.isPlaying()) BossMusic.stop();
+  if (FightMusic.isPlaying()) FightMusic.stop();
+  if (StrollMusic.isPlaying()) StrollMusic.stop();
 }
 
-function bossMusic() {
-    currentTrack = "BS";
-    const music = document.getElementById("BS");
-    music.volume = 0.3;
-    music.play();
+function playMusic(track) {
+  if (currentTrack === track)return;
+  stopAllMusic();
+  track.setVolume(musicVolume);
+  track.loop();
+  currentTrack = track;
 }
 
-function themeMusic() {
-  const P1 = document.getElementById("SM1");
-  const P4 = document.getElementById("SME");
-  P1.volume = 1;
-  P4.volume = 1;
-  P1.ontimeupdate = () => {
-    if (currentTrack !== "P1") return;
-    if (P1.duration - P1.currentTime < 0.15) {
-      loopCount++;
-      if (loopCount < 3) {
-        P1.currentTime = 0;
-        P1.play();
-      } else {
-        loopCount = 0;
-        currentTrack = "P4";
-        P4.currentTime = 0;
-        P4.play();
-      }
-    }
-  };
-  P4.ontimeupdate = () => {
-    if (currentTrack !== "P4") return;
-    if (P4.duration - P4.currentTime < 0.15) {
-      currentTrack = "P1";
-      P1.currentTime = 0;
-      P1.play();
-    }
-  };
-  currentTrack = "P1";
-  P1.play();
+function updateMusic() {
+  if (currentLevel === 10) {
+    playMusic(BossMusic);
+  } 
+  else if (gameState === "combat" || gameState === "combatResult") {
+    playMusic(FightMusic);
+  } 
+  else {
+    playMusic(StrollMusic);
+  }
 }

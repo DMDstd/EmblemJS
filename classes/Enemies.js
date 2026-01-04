@@ -61,6 +61,15 @@ const ENEMY_TYPES = {
     img: "YellowSlime",
     goldGain: 2,
     expGain: 3
+  },
+    7: {
+    name: "The Chitin King",
+    hp: 200000,
+    atk: 5000,
+    def: 4000,
+    img: "YellowSlime",
+    goldGain: 2,
+    expGain: 3
   }
 };
 

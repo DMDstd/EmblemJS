@@ -79,9 +79,9 @@ hitbox() {
     }
     for (let enemy of enemies) {
       if (
-        nx < enemy.x + T_S &&
+        nx < enemy.x + enemy.w &&
         nx + this.size > enemy.x &&
-        ny < enemy.y + T_S &&
+        ny < enemy.y + enemy.h &&
         ny + this.size > enemy.y
       ) {
         console.log("kolize brasko");
