@@ -10,7 +10,7 @@ let keys = {};
 let musicVolume = 0.5;
 let currentTrack = null;
 const T_S = 59;
-let currentLevel = 9;
+let currentLevel = 1;
 let defeatedEnemies = {};
 let despawnedEntities = {};
 const UI_WIDTH = 381;
@@ -105,6 +105,8 @@ function settUI() {
   noStroke();
   fill(20, 220);
   rect(x, y, w, h);
+  textSize(16);
+  text("Audio volume", x + w/2, y + h/2);
 }
 
 function shopUI() {
@@ -329,7 +331,7 @@ function draw() {
     textSize(26);
     text("RESPAWN", windowWidth / 3.3, windowHeight / 2);
     textAlign(LEFT);
-  } 
+  }
   updateMusic();
 }
 
@@ -548,5 +550,12 @@ function updateMusic() {
   } 
   else {
     playMusic(StrollMusic);
+  }
+}
+
+function setMusicVolume(v) {
+  musicVolume = constrain(v, 0, 1);
+  if (currentMusic) {
+    currentMusic.setVolume(musicVolume);
   }
 }
