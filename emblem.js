@@ -249,6 +249,17 @@ function draw() {
   drawUI();
   push();
   translate(UI_WIDTH, 0);
+  if(gameState === "boss") {
+  if (keyIsDown(LEFT_ARROW) || keyIsDown(65)) {
+    player.move("left", walls, water, enemies);
+  }
+  if (keyIsDown(RIGHT_ARROW) || keyIsDown(68)) {
+    player.move("right", walls, water, enemies);
+  }
+  if (keyIsDown(UP_ARROW) || keyIsDown(87)) {
+    player.jump(walls, water, enemies);
+  }
+  }
   if (gameState === "explore") {
   if (keyIsDown(LEFT_ARROW) || keyIsDown(65)) {
     player.move("left", walls, water, enemies);
@@ -334,6 +345,7 @@ function draw() {
     textAlign(LEFT);
   }
   updateMusic();
+  if (currentLevel === 10)gameState = "boss";
 }
 
 function updateHoverTarget(enemies, buttons, entities) {

@@ -39,6 +39,21 @@ move(d, walls, water, enemies) {
     startInteraction(result.entity, player);
   }
 }
+jump(walls, water, enemies) {
+  let nx = this.x;
+  let ny = this.y;
+  ////jump
+  ny -= this.speed;
+  ////
+  let result = this.collides(nx, ny, walls, water, enemies, entities);
+  // Move only if no collision
+  if (!result) {
+    this.x = nx;
+    this.y = ny;
+  } else if (result.entity && gameState === "boss") {
+    startInteraction(result.entity, player);
+  }
+}
 teleport(x, y) {
   console.log(`tel:${this.x}, ${this.y}`);
   this.x = x;
