@@ -36,6 +36,8 @@ let combatResult = {
   victory: false,
   startTime: 0
 };
+const VIRTUAL_WIDTH = 1920;
+const VIRTUAL_HEIGHT = 995;
 
 function preload() {
   images["FenorisL1"] = loadImage('./images/FenorisL1Hit.png');
@@ -245,7 +247,16 @@ function drawUI() {
 }
 
 function draw() {
-  background(images["bg"]);
+  let scaleX = windowWidth / VIRTUAL_WIDTH;
+  let scaleY = windowHeight / VIRTUAL_HEIGHT;
+  let scaleFactor = min(scaleX, scaleY);
+  push();
+  translate(
+    (windowWidth - VIRTUAL_WIDTH * scaleFactor) / 2,
+    (windowHeight - VIRTUAL_HEIGHT * scaleFactor) / 2
+  );
+  scale(scaleFactor);
+  background(0);
   drawUI();
   push();
   translate(UI_WIDTH, 0);
@@ -345,7 +356,15 @@ function draw() {
     textAlign(LEFT);
   }
   updateMusic();
-  if (currentLevel === 10)gameState = "boss";
+  if (currentLevel === 10){
+    background(images["bg"]);
+    gameState = "boss";
+  }
+  pop();
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
 }
 
 function updateHoverTarget(enemies, buttons, entities) {
