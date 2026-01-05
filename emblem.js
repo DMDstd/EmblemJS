@@ -38,6 +38,11 @@ let combatResult = {
 };
 const VIRTUAL_WIDTH = 1920;
 const VIRTUAL_HEIGHT = 995;
+let view = {
+  scale: 1,
+  offsetX: 0,
+  offsetY: 0
+};
 
 function preload() {
   images["FenorisL1"] = loadImage('./images/FenorisL1Hit.png');
@@ -101,8 +106,8 @@ function loadLevel(n) {
 }
 
 function settUI() {
-  const w = windowWidth - UI_WIDTH;
-  const h = windowHeight;
+  const w = VIRTUAL_WIDTH - UI_WIDTH;
+  const h = VIRTUAL_HEIGHT;
   const x = 0;
   const y = 0;
   noStroke();
@@ -113,8 +118,8 @@ function settUI() {
 }
 
 function shopUI() {
-  const w = windowWidth - UI_WIDTH;
-  const h = windowHeight;
+  const w = VIRTUAL_WIDTH - UI_WIDTH;
+  const h = VIRTUAL_HEIGHT;
   const x = 0;
   const y = 0;
   noStroke();
@@ -125,8 +130,8 @@ function shopUI() {
 function drawCombatWindow() {
   const w = 600;
   const h = 300;
-  const x = windowWidth / 2 - UI_WIDTH;
-  const y = windowHeight / 2 - UI_WIDTH / 2;
+  const x = VIRTUAL_WIDTH / 2 - UI_WIDTH;
+  const y = VIRTUAL_HEIGHT / 2 - UI_WIDTH / 2;
   fill(20, 220);
   stroke(255);
   rect(x, y, w, h, 10);
@@ -150,8 +155,8 @@ function drawCombatWindow() {
 function combatResultWindow(victory) {
   const w = 600;
   const h = 300;
-  const x = windowWidth / 2 - UI_WIDTH;
-  const y = windowHeight / 2 - UI_WIDTH / 2;
+  const x = VIRTUAL_WIDTH / 2 - UI_WIDTH;
+  const y = VIRTUAL_HEIGHT / 2 - UI_WIDTH / 2;
   fill(20, 220);
   stroke(255);
   rect(x, y, w, h, 10);
@@ -180,7 +185,7 @@ function combatResultWindow(victory) {
 function drawUI() {
   noStroke();
   fill(30);
-  rect(0, 0, UI_WIDTH, 995);
+  rect(0, 0, UI_WIDTH, VIRTUAL_HEIGHT);
   fill(255);
   textSize(16);
   text(`Floor: ${currentLevel}`, 20, 60);
@@ -243,22 +248,20 @@ function drawUI() {
   }
   statOffset = 0;
   stroke(80);
-  line(UI_WIDTH - 10, 0, UI_WIDTH - 10, windowHeight);
+  line(UI_WIDTH - 10, 0, UI_WIDTH - 10, VIRTUAL_HEIGHT);
 }
 
 function draw() {
   let scaleX = windowWidth / VIRTUAL_WIDTH;
   let scaleY = windowHeight / VIRTUAL_HEIGHT;
-  let scaleFactor = min(scaleX, scaleY);
-  push();
-  translate(
-    (windowWidth - VIRTUAL_WIDTH * scaleFactor) / 2,
-    (windowHeight - VIRTUAL_HEIGHT * scaleFactor) / 2
-  );
-  scale(scaleFactor);
+  view.scale = min(scaleX, scaleY);
+  view.offsetX = (windowWidth - VIRTUAL_WIDTH * view.scale) / 2;
+  view.offsetY = (windowHeight - VIRTUAL_HEIGHT * view.scale) / 2;
   background(0);
-  drawUI();
   push();
+  translate(view.offsetX, view.offsetY);
+  scale(view.scale);
+  drawUI();
   translate(UI_WIDTH, 0);
   if(gameState === "boss") {
   if (keyIsDown(LEFT_ARROW) || keyIsDown(65)) {
@@ -367,16 +370,24 @@ function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
 
+function getWorldMouse() {
+  let x = mouseX - view.offsetX;
+  let y = mouseY - view.offsetY;
+  x /= view.scale;
+  y /= view.scale;
+  x -= UI_WIDTH;
+  return { x, y };
+}
+
 function updateHoverTarget(enemies, buttons, entities) {
   currentTarget = null;
-  const mx = mouseX - UI_WIDTH;
-  const my = mouseY;
+  let m = getWorldMouse();
   for (let enemy of enemies) {
     if (
-      mx >= enemy.x &&
-      mx <= enemy.x + enemy.w &&
-      my >= enemy.y &&
-      my <= enemy.y + enemy.h
+      m.x >= enemy.x &&
+      m.x <= enemy.x + enemy.w &&
+      m.y >= enemy.y &&
+      m.y <= enemy.y + enemy.h
     ) {
       currentTarget = enemy;
       currentTargetSwitch = 1;
@@ -386,10 +397,10 @@ function updateHoverTarget(enemies, buttons, entities) {
   for (let entity of entities) {
     if (entity.inter == "container") {
       if (
-      mx >= entity.x &&
-      mx <= entity.x + entity.w &&
-      my >= entity.y &&
-      my <= entity.y + entity.h
+      m.x >= entity.x &&
+      m.x <= entity.x + entity.w &&
+      m.y >= entity.y &&
+      m.y <= entity.y + entity.h
     ) {
       currentTarget = entity;
       currentTargetSwitch = 4;
@@ -399,10 +410,10 @@ function updateHoverTarget(enemies, buttons, entities) {
   }
   for (let button of buttons) {
     if (
-      mx >= button.x &&
-      mx <= button.x + button.w &&
-      my >= button.y &&
-      my <= button.y + button.h
+      m.x >= button.x &&
+      m.x <= button.x + button.w &&
+      m.y >= button.y &&
+      m.y <= button.y + button.h
     ) {
       if(button.t == "sett") {
         currentTarget = button;
