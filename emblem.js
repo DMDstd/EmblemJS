@@ -180,7 +180,7 @@ function combatResultWindow(victory) {
 function drawUI() {
   noStroke();
   fill(30);
-  rect(0, 0, UI_WIDTH, windowHeight);
+  rect(0, 0, UI_WIDTH, 995);
   fill(255);
   textSize(16);
   text(`Floor: ${currentLevel}`, 20, 60);
