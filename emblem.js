@@ -200,11 +200,11 @@ function shopUI() {
     mouseIsPressed = false;
   }else if(mouseIsPressed && m.x >= 665 && m.x <= 695 && m.y >= 430 && m.y <= 460 && gold >= price){
     player.atk += 3;
-    gold - price;
+    gold -= price;
     mouseIsPressed = false;
   }else if(mouseIsPressed && m.x >= 1135 && m.x <= 1165 && m.y >= 430 && m.y <= 460 && gold >= price){
     player.def += 3;
-    gold - price;
+    gold -= price;
     mouseIsPressed = false;
   }
   image(images["yellowKey"],110, 600, 330, 165);
