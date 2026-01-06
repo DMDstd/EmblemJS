@@ -124,6 +124,8 @@ function shopUI() {
   const x = 0;
   const y = 0;
   const closeSize = 30;
+  const price = 10;
+  
   noStroke();
   fill(20, 220);
   rect(x, y, w, h);
@@ -133,6 +135,26 @@ function shopUI() {
     shop = 0;
     gameState = "explore";
   }
+  fill(255);
+  textAlign(LEFT);
+  textSize(22);
+  image(images["hpBottle"], 110, 100, 200, 320);
+  text("Health Potion - 10 Gold", 90, 460);
+  image(images["atkBottle"], 580, 100, 200, 320);
+  text("Attack Potion - 10 Gold", 560, 460);
+  image(images["defBottle"], 1050, 100, 200, 320);
+  text("Defence Potion - 10 Gold", 1030, 460);
+  if(mouseIsPressed && m.x >= 110 && m.x <= 310 && m.y >= 100 && m.y <= 420 && player.gold > price){
+    player.hp += 10;
+    player.gold - price;
+  }else if(mouseIsPressed && m.x >= 580 && m.x <= 780 && m.y >= 100 && m.y <= 420 && player.gold > price){
+    player.atk += 3;
+    player.gold - price;
+  }else if(mouseIsPressed && m.x >= 1050 && m.x <= 1250 && m.y >= 100 && m.y <= 420 && player.gold > price){
+    player.def += 3;
+    player.gold - price;
+  }
+  
 }
 
 function drawCombatWindow() {
