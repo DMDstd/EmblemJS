@@ -320,11 +320,15 @@ function draw() {
   }
   if (currentTarget && currentTargetSwitch == 3 && mouseIsPressed) {
     shop = 1;
+    console.log("shop");
     gameState = "INUI"
+    currentTargetSwitch = 0;
   }
   if (currentTarget && currentTargetSwitch == 2 && mouseIsPressed) {
     sett = 1;
+    console.log("sett");
     gameState = "INUI"
+    currentTargetSwitch = 0;
   }
   if (shop == 1)shopUI();
   if (sett == 1)settUI();
@@ -419,10 +423,11 @@ function updateHoverTarget(enemies, buttons, entities) {
         currentTarget = button;
         currentTargetSwitch = 2;
         return;
-      }
+      } else if(button.t == "shop"){
       currentTarget = button;
       currentTargetSwitch = 3;
       return;
+      }
     }
   }
   currentTarget = null;
