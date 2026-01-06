@@ -111,11 +111,18 @@ function settUI() {
   const h = VIRTUAL_HEIGHT;
   const x = 0;
   const y = 0;
+  const closeSize = 30;
   noStroke();
   fill(20, 220);
   rect(x, y, w, h);
   textSize(16);
   text("Audio volume", x + w/2, y + h/2);
+  image(images["cross"], w - closeSize, y, closeSize, closeSize);
+  let m = getWorldMouse();
+  if (keyIsDown(ESCAPE) || mouseIsPressed && m.x >= w - closeSize && m.x <= w && m.y >= y && m.y <= y + closeSize) {
+    sett = 0;
+    gameState = "explore";
+  }
 }
 
 function shopUI() {
