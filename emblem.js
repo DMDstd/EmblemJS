@@ -131,7 +131,6 @@ function shopUI() {
   const x = 0;
   const y = 0;
   const closeSize = 30;
-  const price = 10;
   let price = 10;
   let m = getWorldMouse();
   noStroke();
