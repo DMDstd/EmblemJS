@@ -172,12 +172,12 @@ function shopUI() {
   const x = 0;
   const y = 0;
   const closeSize = 30;
-  const price = 10;
+  let price = 10;
+  let m = getWorldMouse();
   noStroke();
   fill(20, 220);
   rect(x, y, w, h);
   image(images["cross"], w - closeSize, y, closeSize, closeSize);
-  let m = getWorldMouse();
   if (keyIsDown(ESCAPE) || mouseIsPressed && m.x >= w - closeSize && m.x <= w && m.y >= y && m.y <= y + closeSize) {
     shop = 0;
     gameState = "explore";
@@ -192,15 +192,17 @@ function shopUI() {
   image(images["defBottle"], 1050, 100, 200, 320);
   text("Defence Potion - 10 Gold", 1030, 460);
   if(mouseIsPressed && m.x >= 110 && m.x <= 310 && m.y >= 100 && m.y <= 420 && gold >= price){
-    console.log("a");
     player.hp += 10;
     gold -= price;
-  }else if(mouseIsPressed && m.x >= 580 && m.x <= 780 && m.y >= 100 && m.y <= 420 && gold >= price){
+    mouseIsPressed = false;
+  }else if(mouseIsPressed && m.x >= 580 && m.x <= 780 && m.y >= 100 && m.y <= 420 && player.gold >= price){
     player.atk += 3;
-    gold -= price;
-  }else if(mouseIsPressed && m.x >= 1050 && m.x <= 1250 && m.y >= 100 && m.y <= 420 && gold >= price){
+    player.gold - price;
+    mouseIsPressed = false;
+  }else if(mouseIsPressed && m.x >= 1050 && m.x <= 1250 && m.y >= 100 && m.y <= 420 && player.gold >= price){
     player.def += 3;
-    gold -= price;
+    player.gold - price;
+    mouseIsPressed = false;
   }
   
 }
