@@ -123,12 +123,13 @@ function shopUI() {
   const h = VIRTUAL_HEIGHT;
   const x = 0;
   const y = 0;
+  const closeSize = 30;
   noStroke();
   fill(20, 220);
   rect(x, y, w, h);
-  image(images["cross"], w - 30, y, 30, 30);
+  image(images["cross"], w - closeSize, y, closeSize, closeSize);
   let m = getWorldMouse();
-  if (keyIsDown(ESCAPE) || mouseIsPressed && m.x >= w - 30 && m.x <= w && m.y >= y && m.y <= y + 30) {
+  if (keyIsDown(ESCAPE) || mouseIsPressed && m.x >= w - closeSize && m.x <= w && m.y >= y && m.y <= y + closeSize) {
     shop = 0;
     gameState = "explore";
   }
