@@ -111,11 +111,18 @@ function settUI() {
   const h = VIRTUAL_HEIGHT;
   const x = 0;
   const y = 0;
+  const closeSize = 30;
   noStroke();
   fill(20, 220);
   rect(x, y, w, h);
   textSize(16);
   text("Audio volume", x + w/2, y + h/2);
+  image(images["cross"], w - closeSize, y, closeSize, closeSize);
+  let m = getWorldMouse();
+  if (keyIsDown(ESCAPE) || mouseIsPressed && m.x >= w - closeSize && m.x <= w && m.y >= y && m.y <= y + closeSize) {
+    sett = 0;
+    gameState = "explore";
+  }
 }
 
 function shopUI() {
@@ -350,11 +357,15 @@ function draw() {
   }
   if (currentTarget && currentTargetSwitch == 3 && mouseIsPressed) {
     shop = 1;
+    console.log("shop");
     gameState = "INUI"
+    currentTargetSwitch = 0;
   }
   if (currentTarget && currentTargetSwitch == 2 && mouseIsPressed) {
     sett = 1;
+    console.log("sett");
     gameState = "INUI"
+    currentTargetSwitch = 0;
   }
   if (shop == 1)shopUI();
   if (sett == 1)settUI();
@@ -449,10 +460,11 @@ function updateHoverTarget(enemies, buttons, entities) {
         currentTarget = button;
         currentTargetSwitch = 2;
         return;
-      }
+      } else if(button.t == "shop"){
       currentTarget = button;
       currentTargetSwitch = 3;
       return;
+      }
     }
   }
   currentTarget = null;
