@@ -25,7 +25,7 @@ let lastCombatTick = 0;
 let yellowKey = 1;
 let blueKey = 1;
 let redKey = 1;
-let gold = 0;
+let gold = 50;
 let exp = 0;
 let PlayerHP = 100;
 let PlayerAtk = 10;
@@ -173,7 +173,6 @@ function shopUI() {
   const y = 0;
   const closeSize = 30;
   const price = 10;
-  
   noStroke();
   fill(20, 220);
   rect(x, y, w, h);
@@ -192,15 +191,16 @@ function shopUI() {
   text("Attack Potion - 10 Gold", 560, 460);
   image(images["defBottle"], 1050, 100, 200, 320);
   text("Defence Potion - 10 Gold", 1030, 460);
-  if(mouseIsPressed && m.x >= 110 && m.x <= 310 && m.y >= 100 && m.y <= 420 && player.gold > price){
+  if(mouseIsPressed && m.x >= 110 && m.x <= 310 && m.y >= 100 && m.y <= 420 && gold >= price){
+    console.log("a");
     player.hp += 10;
-    player.gold - price;
-  }else if(mouseIsPressed && m.x >= 580 && m.x <= 780 && m.y >= 100 && m.y <= 420 && player.gold > price){
+    gold -= price;
+  }else if(mouseIsPressed && m.x >= 580 && m.x <= 780 && m.y >= 100 && m.y <= 420 && gold >= price){
     player.atk += 3;
-    player.gold - price;
-  }else if(mouseIsPressed && m.x >= 1050 && m.x <= 1250 && m.y >= 100 && m.y <= 420 && player.gold > price){
+    gold -= price;
+  }else if(mouseIsPressed && m.x >= 1050 && m.x <= 1250 && m.y >= 100 && m.y <= 420 && gold >= price){
     player.def += 3;
-    player.gold - price;
+    gold -= price;
   }
   
 }
