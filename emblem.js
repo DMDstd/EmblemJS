@@ -207,7 +207,28 @@ function shopUI() {
     gold - price;
     mouseIsPressed = false;
   }
-  
+  image(images["yellowKey"],110, 600, 330, 165);
+  image(images["shop"], 260, 775 , 30, 30);
+  text("Yellow key - 8 Gold", 190 , 590);
+  image(images["blueKey"],540, 600, 330, 165);
+  image(images["shop"], 690, 775 , 30, 30);
+  text("Blue key - 20 Gold", 620 , 590);
+  image(images["redKey"],970, 600, 330, 165);
+  image(images["shop"], 1120, 775 , 30, 30);
+  text("Red key - 40 Gold", 1050 , 590);
+   if(mouseIsPressed && m.x >= 260 && m.x <= 290 && m.y >= 775 && m.y <= 805 && gold >= 8){
+    yellowKey++;
+    gold -= 8;
+    mouseIsPressed = false;
+  }else if(mouseIsPressed && m.x >= 690 && m.x <= 720 && m.y >= 775 && m.y <= 805 && gold >= 20){
+    blueKey++;
+    gold -= 20;
+    mouseIsPressed = false;
+  }else if(mouseIsPressed && m.x >= 1120 && m.x <= 1150 && m.y >= 775 && m.y <= 805 && gold >= 40){
+    redKey++;
+    gold -= 40;
+    mouseIsPressed = false;
+  }
 }
 
 function drawCombatWindow() {
