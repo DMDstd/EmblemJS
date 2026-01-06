@@ -85,6 +85,7 @@ function preload() {
   images["GateB2"] = loadImage('./images/GateB2.png');
   images["GateR2"] = loadImage('./images/GateR2.png');
   images["GateY2"] = loadImage('./images/GateY2.png');
+  images["cross"] = loadImage('./images/cross.png');
   BossMusic = loadSound('./tracks/BossMusic.m4a');
   FightMusic = loadSound('./tracks/Combat.m4a');
   StrollMusic = loadSound('./tracks/stroll_track.wav');
@@ -122,9 +123,16 @@ function shopUI() {
   const h = VIRTUAL_HEIGHT;
   const x = 0;
   const y = 0;
+  const closeSize = 30;
   noStroke();
   fill(20, 220);
   rect(x, y, w, h);
+  image(images["cross"], w - closeSize, y, closeSize, closeSize);
+  let m = getWorldMouse();
+  if (keyIsDown(ESCAPE) || mouseIsPressed && m.x >= w - closeSize && m.x <= w && m.y >= y && m.y <= y + closeSize) {
+    shop = 0;
+    gameState = "explore";
+  }
 }
 
 function drawCombatWindow() {
