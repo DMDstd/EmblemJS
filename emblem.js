@@ -191,16 +191,18 @@ function shopUI() {
   text("Attack Potion - 10 Gold", 560, 460);
   image(images["defBottle"], 1050, 100, 200, 320);
   text("Defence Potion - 10 Gold", 1030, 460);
-  if(mouseIsPressed && m.x >= 110 && m.x <= 310 && m.y >= 100 && m.y <= 420 && player.gold >= price){
+  if(mouseIsPressed && m.x >= 110 && m.x <= 310 && m.y >= 100 && m.y <= 420 && gold >= price){
     player.hp += 10;
-    player.gold -= price;
-    millis()<1000;
+    gold -= price;
+    mouseIsPressed = false;
   }else if(mouseIsPressed && m.x >= 580 && m.x <= 780 && m.y >= 100 && m.y <= 420 && player.gold >= price){
     player.atk += 3;
     player.gold - price;
+    mouseIsPressed = false;
   }else if(mouseIsPressed && m.x >= 1050 && m.x <= 1250 && m.y >= 100 && m.y <= 420 && player.gold >= price){
     player.def += 3;
     player.gold - price;
+    mouseIsPressed = false;
   }
   
 }
