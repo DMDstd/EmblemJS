@@ -194,6 +194,7 @@ function shopUI() {
   if(mouseIsPressed && m.x >= 110 && m.x <= 310 && m.y >= 100 && m.y <= 420 && player.gold >= price){
     player.hp += 10;
     player.gold -= price;
+    millis()<1000;
   }else if(mouseIsPressed && m.x >= 580 && m.x <= 780 && m.y >= 100 && m.y <= 420 && player.gold >= price){
     player.atk += 3;
     player.gold - price;
