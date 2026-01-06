@@ -112,17 +112,58 @@ function settUI() {
   const x = 0;
   const y = 0;
   const closeSize = 30;
+  const sliderX = 80;
+  const sliderY = 120;
+  const sliderW = w - 160;
+  const sliderH = 6;
+  const knobR = 10;
+  let m = getWorldMouse();
   noStroke();
   fill(20, 220);
   rect(x, y, w, h);
-  textSize(16);
-  text("Audio volume", x + w/2, y + h/2);
-  image(images["cross"], w - closeSize, y, closeSize, closeSize);
-  let m = getWorldMouse();
-  if (keyIsDown(ESCAPE) || mouseIsPressed && m.x >= w - closeSize && m.x <= w && m.y >= y && m.y <= y + closeSize) {
+  fill(255);
+  textAlign(CENTER);
+  textSize(20);
+  text("SETTINGS", w / 2, 40);
+  image(images["cross"], w - closeSize - 10, 10, closeSize, closeSize);
+  if (
+    keyIsDown(ESCAPE) ||
+    (mouseIsPressed &&
+      m.x >= w - closeSize - 10 &&
+      m.x <= w - 10 &&
+      m.y >= 10 &&
+      m.y <= 10 + closeSize)
+  ) {
     sett = 0;
     gameState = "explore";
+    return;
   }
+  textAlign(LEFT);
+  textSize(16);
+  text("Master Volume", sliderX, sliderY - 20);
+  stroke(150);
+  strokeWeight(sliderH);
+  line(sliderX, sliderY, sliderX + sliderW, sliderY);
+  let knobX = sliderX + musicVolume * sliderW;
+  noStroke();
+  fill(255);
+  circle(knobX, sliderY, knobR * 2);
+  if (
+    mouseIsPressed &&
+    m.x >= sliderX &&
+    m.x <= sliderX + sliderW &&
+    m.y >= sliderY - 15 &&
+    m.y <= sliderY + 15
+  ) {
+    musicVolume = constrain(
+      (m.x - sliderX) / sliderW,
+      0,
+      1
+    );
+  }
+  textAlign(RIGHT);
+  textSize(14);
+  text(Math.round(musicVolume * 100) + "%", sliderX + sliderW, sliderY + 30);
 }
 
 function shopUI() {
@@ -382,6 +423,9 @@ function draw() {
     background(images["bg"]);
     gameState = "boss";
   }
+  FightMusic.setVolume(musicVolume);
+  BossMusic.setVolume(musicVolume);
+  StrollMusic.setVolume(musicVolume);
   pop();
 }
 
