@@ -419,8 +419,8 @@ function draw() {
     b.draw();
   }
   player.draw();
-  if (xp >= 100) {
-    xp-=100;
+  if (exp >= 100) {
+    exp-=100;
     perks++;
   }
   //player.hitbox();
