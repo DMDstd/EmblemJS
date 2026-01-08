@@ -10,7 +10,7 @@ let keys = {};
 let musicVolume = 0.5;
 let currentTrack = null;
 const T_S = 59;
-let currentLevel = 1;
+let currentLevel = 4;
 let defeatedEnemies = {};
 let despawnedEntities = {};
 const UI_WIDTH = 381;
@@ -579,7 +579,7 @@ function changeLevel(d, x, y) {
   } else if(d === 0) {
     currentLevel--;
     loadLevel(currentLevel);
-    x += (windowWidth - UI_WIDTH) - 2.5*T_S;
+    x += (windowWidth - UI_WIDTH) - 2.2*T_S;
     player.teleport(x, y - 10);
   }
 }
