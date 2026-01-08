@@ -27,6 +27,7 @@ let blueKey = 1;
 let redKey = 1;
 let gold = 0;
 let exp = 0;
+let perks = 0;
 let PlayerHP = 100;
 let PlayerAtk = 10;
 let PlayerDef = 10;
@@ -418,6 +419,10 @@ function draw() {
     b.draw();
   }
   player.draw();
+  if (xp >= 100) {
+    xp-=100;
+    perks++;
+  }
   //player.hitbox();
   if (gameState === "explore") {
     updateHoverTarget(enemies, buttons, entities);
