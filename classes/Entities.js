@@ -63,8 +63,8 @@ const ENTITY_TYPES = {
     goldGain: 50
   },
     7: {
-    name: "HP Potion",
-    img: "hpBottle",
+    name: "Small HP Potion",
+    img: "smallHpBottle",
     inter: "container",
     hp: 30,
     atk: 0,
@@ -72,8 +72,8 @@ const ENTITY_TYPES = {
     goldGain: 0
   },
     8: {
-    name: "Attack Potion",
-    img: "atkBottle",
+    name: "Small Attack Potion",
+    img: "smallAtkBottle",
     inter: "container",
     hp: 0,
     atk: 3,
@@ -81,12 +81,66 @@ const ENTITY_TYPES = {
     goldGain: 0
   },
     9: {
+    name: "Small Defence Potion",
+    img: "smallDefBottle",
+    inter: "container",
+    hp: 0,
+    atk: 0,
+    def: 3,
+    goldGain: 0
+  },
+    i: {
+    name: "HP Potion",
+    img: "hpBottle",
+    inter: "container",
+    hp: 300,
+    atk: 0,
+    def: 0,
+    goldGain: 0
+  },
+    j: {
+    name: "Attack Potion",
+    img: "atkBottle",
+    inter: "container",
+    hp: 0,
+    atk: 30,
+    def: 0,
+    goldGain: 0
+  },
+    k: {
     name: "Defence Potion",
     img: "defBottle",
     inter: "container",
     hp: 0,
     atk: 0,
-    def: 3,
+    def: 30,
+    goldGain: 0
+  },
+    l: {
+    name: "Big HP Potion",
+    img: "bigHpBottle",
+    inter: "container",
+    hp: 3000,
+    atk: 0,
+    def: 0,
+    goldGain: 0
+  },
+    m: {
+    name: "Big Attack Potion",
+    img: "bigAtkBottle",
+    inter: "container",
+    hp: 0,
+    atk: 300,
+    def: 0,
+    goldGain: 0
+  },
+    n: {
+    name: "Big Defence Potion",
+    img: "bigDefBottle",
+    inter: "container",
+    hp: 0,
+    atk: 0,
+    def: 300,
     goldGain: 0
   },
   a:{
@@ -189,11 +243,23 @@ function startInteraction(entity, player) {
         gold += entity.goldGain;
       }
       else return 0;
+    } else if (entity.name === "Small Defence Potion") {
+      player.def += entity.def;
+    } else if (entity.name === "Small HP Potion") {
+      player.hp += entity.hp;
+    } else if (entity.name === "Small Attack Potion") {
+      player.atk += entity.atk;
     } else if (entity.name === "Defence Potion") {
       player.def += entity.def;
     } else if (entity.name === "HP Potion") {
       player.hp += entity.hp;
     } else if (entity.name === "Attack Potion") {
+      player.atk += entity.atk;
+    } else if (entity.name === "Big Defence Potion") {
+      player.def += entity.def;
+    } else if (entity.name === "Big HP Potion") {
+      player.hp += entity.hp;
+    } else if (entity.name === "Big Attack Potion") {
       player.atk += entity.atk;
     }
   }

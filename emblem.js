@@ -25,12 +25,15 @@ let lastCombatTick = 0;
 let yellowKey = 1;
 let blueKey = 1;
 let redKey = 1;
-let gold = 50;
+let gold = 0;
 let exp = 0;
+let perks = 0;
 let PlayerHP = 100;
 let PlayerAtk = 10;
 let PlayerDef = 10;
 let statOffset = 0;
+let BossMaxHP = 200000;
+let BossHP = BossMaxHP;
 const COMBAT_INTERVAL = 1000;
 let combatResult = {
   victory: false,
@@ -74,9 +77,15 @@ function preload() {
   images["water"] = loadImage('./images/water.png');
   images["sword"] = loadImage('./images/sword.png');
   images["XP"] = loadImage('./images/XP.png');
+  images["smallDefBottle"] = loadImage('./images/smallDEFpotion.png');
+  images["smallHpBottle"] = loadImage('./images/smallHPpotion.png');
+  images["smallAtkBottle"] = loadImage('./images/smallATKpotion.png');
   images["defBottle"] = loadImage('./images/defBottle.png');
   images["hpBottle"] = loadImage('./images/hpBottle.png');
   images["atkBottle"] = loadImage('./images/atkBottle.png');
+  images["bigDefBottle"] = loadImage('./images/bigDEFpotion.png');
+  images["bigHpBottle"] = loadImage('./images/bigHPpotion.png');
+  images["bigAtkBottle"] = loadImage('./images/bigATKpotion.png');
   images["Gate"] = loadImage('./images/Gate.png');
   images["GateB"] = loadImage('./images/GateB.png');
   images["GateR"] = loadImage('./images/GateR.png');
@@ -85,7 +94,7 @@ function preload() {
   images["GateB2"] = loadImage('./images/GateB2.png');
   images["GateR2"] = loadImage('./images/GateR2.png');
   images["GateY2"] = loadImage('./images/GateY2.png');
-  images["cross"] = loadImage('./images/cross.png');
+  images["cross"] = loadImage('./images/Cross.png');
   BossMusic = loadSound('./tracks/BossMusic.m4a');
   FightMusic = loadSound('./tracks/Combat.m4a');
   StrollMusic = loadSound('./tracks/stroll_track.wav');
@@ -104,6 +113,19 @@ function loadLevel(n) {
   generateLevel(lvl.terrain);
   generateEnemies(lvl.enemies, n);
   generateEntities(lvl.entities, n);
+}
+
+function drawHPBar(x, y, w, h, current, max) {
+  current = constrain(current, 0, max);
+  let ratio = current / max;
+  noStroke();
+  fill(80);
+  rect(x, y, w, h, 4);
+  fill(200, 40, 40);
+  rect(x, y, w * ratio, h, 4);
+  stroke(0);
+  noFill();
+  rect(x, y, w, h, 4);
 }
 
 function settUI() {
@@ -185,13 +207,13 @@ function shopUI() {
   fill(255);
   textAlign(LEFT);
   textSize(22);
-  image(images["hpBottle"], 110, 100, 200, 320);
+  image(images["smallHpBottle"], 150, 100, 120, 280);
   image(images["shop"], 195, 430 , 30, 30);
   text("Health Potion - 10 Gold", 90, 90);
-  image(images["atkBottle"], 580, 100, 200, 320);
+  image(images["smallAtkBottle"], 620, 100, 120, 280);
   image(images["shop"], 665, 430 , 30, 30);
   text("Attack Potion - 10 Gold", 560, 90);
-  image(images["defBottle"], 1050, 100, 200, 320);
+  image(images["smallDefBottle"], 1090, 100, 120, 280);
   image(images["shop"], 1135, 430 , 30, 30);
   text("Defence Potion - 10 Gold", 1030, 90);
   if(mouseIsPressed && m.x >= 195 && m.x <= 225 && m.y >= 430 && m.y <= 460 && gold >= price){
@@ -362,6 +384,10 @@ function draw() {
   view.offsetX = (windowWidth - VIRTUAL_WIDTH * view.scale) / 2;
   view.offsetY = (windowHeight - VIRTUAL_HEIGHT * view.scale) / 2;
   background(0);
+  if (currentLevel === 10){
+    background(images["bg"]);
+    gameState = "boss";
+  } 
   push();
   translate(view.offsetX, view.offsetY);
   scale(view.scale);
@@ -418,6 +444,10 @@ function draw() {
     b.draw();
   }
   player.draw();
+  if (exp >= 100) {
+    exp-=100;
+    perks++;
+  }
   //player.hitbox();
   if (gameState === "explore") {
     updateHoverTarget(enemies, buttons, entities);
@@ -467,13 +497,12 @@ function draw() {
     textAlign(LEFT);
   }
   updateMusic();
-  if (currentLevel === 10){
-    background(images["bg"]);
-    gameState = "boss";
-  }
   FightMusic.setVolume(musicVolume);
   BossMusic.setVolume(musicVolume);
   StrollMusic.setVolume(musicVolume);
+  if (gameState == "boss") {
+    drawHPBar(510, 40, 500, 10, BossHP, BossMaxHP);
+  }
   pop();
 }
 
@@ -646,13 +675,31 @@ function generateEntities(map, levelNum) {
         entities.push(new Entity(px, py, T_S, T_S, 6, key));
       }
       if (tile === "7" && !despawnedEntities[key]) {
-        entities.push(new Entity(px + T_S/4, py + T_S/6, 30, 48, 7, key));
+        entities.push(new Entity(px + T_S/3.3, py + T_S/20, 24, 56, 7, key));
       }
       if (tile === "8" && !despawnedEntities[key]) {
-        entities.push(new Entity(px + T_S/4, py + T_S/6, 30, 48, 8, key));
+        entities.push(new Entity(px + T_S/3.3, py + T_S/20, 24, 56, 8, key));
       }
       if (tile === "9" && !despawnedEntities[key]) {
-        entities.push(new Entity(px + T_S/4, py + T_S/6, 30, 48, 9, key));
+        entities.push(new Entity(px + T_S/3.3, py + T_S/20, 24, 56, 9, key));
+      }
+      if (tile === "i" && !despawnedEntities[key]) {
+        entities.push(new Entity(px + T_S/4, py + T_S/6, 30, 48, i, key));
+      }
+      if (tile === "j" && !despawnedEntities[key]) {
+        entities.push(new Entity(px + T_S/4, py + T_S/6, 30, 48, j, key));
+      }
+      if (tile === "k" && !despawnedEntities[key]) {
+        entities.push(new Entity(px + T_S/4, py + T_S/6, 30, 48, k, key));
+      }
+      if (tile === "l" && !despawnedEntities[key]) {
+        entities.push(new Entity(px, py, T_S, T_S, l, key));
+      }
+      if (tile === "m" && !despawnedEntities[key]) {
+        entities.push(new Entity(px, py, T_S, T_S, m, key));
+      }
+      if (tile === "n" && !despawnedEntities[key]) {
+        entities.push(new Entity(px, py, T_S, T_S, n, key));
       }
       if (tile === "a" && !despawnedEntities[key]) {
         entities.push(new Entity(px, py, T_S, T_S, "a", key));
@@ -705,12 +752,5 @@ function updateMusic() {
   } 
   else {
     playMusic(StrollMusic);
-  }
-}
-
-function setMusicVolume(v) {
-  musicVolume = constrain(v, 0, 1);
-  if (currentMusic) {
-    currentMusic.setVolume(musicVolume);
   }
 }

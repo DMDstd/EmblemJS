@@ -14,8 +14,8 @@ const ENEMY_TYPES = {
     atk: 40,
     def: 2,
     img: "RedSlime",
-    goldGain: 2,
-    expGain: 3
+    goldGain: 4,
+    expGain: 7
   },
     2: {
     name: "Golden Slime",
@@ -27,44 +27,44 @@ const ENEMY_TYPES = {
     expGain: 1
   },
     3: {
-    name: "Pink Slime",
+    name: "Yellow Slime",
     hp: 20,
     atk: 10,
     def: 10,
-    img: "PinkSlime",
-    goldGain: 2,
-    expGain: 3
+    img: "YellowSlime",
+    goldGain: 3,
+    expGain: 4
   },
     4: {
     name: "Purple Slime",
     hp: 250,
     atk: 80,
-    def: 75,
+    def: 60,
     img: "PurpleSlime",
     goldGain: 2,
     expGain: 3
   },
     5: {
     name: "White Slime",
-    hp: 20,
-    atk: 1200,
-    def: 5,
+    hp: 200,
+    atk: 125,
+    def: 50,
     img: "WhiteSlime",
     goldGain: 2,
     expGain: 3
   },
     6: {
-    name: "Yellow Slime",
-    hp: 20000,
-    atk: 4,
-    def: 4,
-    img: "YellowSlime",
+    name: "Pink Slime",
+    hp: 600,
+    atk: 110,
+    def: 80,
+    img: "PinkSlime",
     goldGain: 2,
     expGain: 3
   },
     7: {
     name: "The Chitin King",
-    hp: 200000,
+    hp: BossMaxHP,
     atk: 5000,
     def: 2000,
     img: "SpiderKing",
