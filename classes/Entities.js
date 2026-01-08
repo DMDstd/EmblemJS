@@ -243,11 +243,23 @@ function startInteraction(entity, player) {
         gold += entity.goldGain;
       }
       else return 0;
+    } else if (entity.name === "Small Defence Potion") {
+      player.def += entity.def;
+    } else if (entity.name === "Small HP Potion") {
+      player.hp += entity.hp;
+    } else if (entity.name === "Small Attack Potion") {
+      player.atk += entity.atk;
     } else if (entity.name === "Defence Potion") {
       player.def += entity.def;
     } else if (entity.name === "HP Potion") {
       player.hp += entity.hp;
     } else if (entity.name === "Attack Potion") {
+      player.atk += entity.atk;
+    } else if (entity.name === "Big Defence Potion") {
+      player.def += entity.def;
+    } else if (entity.name === "Big HP Potion") {
+      player.hp += entity.hp;
+    } else if (entity.name === "Big Attack Potion") {
       player.atk += entity.atk;
     }
   }

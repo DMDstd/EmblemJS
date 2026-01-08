@@ -675,13 +675,31 @@ function generateEntities(map, levelNum) {
         entities.push(new Entity(px, py, T_S, T_S, 6, key));
       }
       if (tile === "7" && !despawnedEntities[key]) {
-        entities.push(new Entity(px + T_S/4, py + T_S/6, 30, 48, 7, key));
+        entities.push(new Entity(px + T_S/3.3, py + T_S/20, 24, 56, 7, key));
       }
       if (tile === "8" && !despawnedEntities[key]) {
-        entities.push(new Entity(px + T_S/4, py + T_S/6, 30, 48, 8, key));
+        entities.push(new Entity(px + T_S/3.3, py + T_S/20, 24, 56, 8, key));
       }
       if (tile === "9" && !despawnedEntities[key]) {
-        entities.push(new Entity(px + T_S/4, py + T_S/6, 30, 48, 9, key));
+        entities.push(new Entity(px + T_S/3.3, py + T_S/20, 24, 56, 9, key));
+      }
+      if (tile === "i" && !despawnedEntities[key]) {
+        entities.push(new Entity(px + T_S/4, py + T_S/6, 30, 48, i, key));
+      }
+      if (tile === "j" && !despawnedEntities[key]) {
+        entities.push(new Entity(px + T_S/4, py + T_S/6, 30, 48, j, key));
+      }
+      if (tile === "k" && !despawnedEntities[key]) {
+        entities.push(new Entity(px + T_S/4, py + T_S/6, 30, 48, k, key));
+      }
+      if (tile === "l" && !despawnedEntities[key]) {
+        entities.push(new Entity(px, py, T_S, T_S, l, key));
+      }
+      if (tile === "m" && !despawnedEntities[key]) {
+        entities.push(new Entity(px, py, T_S, T_S, m, key));
+      }
+      if (tile === "n" && !despawnedEntities[key]) {
+        entities.push(new Entity(px, py, T_S, T_S, n, key));
       }
       if (tile === "a" && !despawnedEntities[key]) {
         entities.push(new Entity(px, py, T_S, T_S, "a", key));
