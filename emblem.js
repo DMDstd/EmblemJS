@@ -86,7 +86,7 @@ function preload() {
   images["GateB2"] = loadImage('./images/GateB2.png');
   images["GateR2"] = loadImage('./images/GateR2.png');
   images["GateY2"] = loadImage('./images/GateY2.png');
-  images["cross"] = loadImage('./images/cross.png');
+  images["cross"] = loadImage('./images/Cross.png');
   BossMusic = loadSound('./tracks/BossMusic.m4a');
   FightMusic = loadSound('./tracks/Combat.m4a');
   StrollMusic = loadSound('./tracks/stroll_track.wav');
