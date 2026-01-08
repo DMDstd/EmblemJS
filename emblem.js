@@ -10,7 +10,7 @@ let keys = {};
 let musicVolume = 0.5;
 let currentTrack = null;
 const T_S = 59;
-let currentLevel = 1;
+let currentLevel = 2;
 let defeatedEnemies = {};
 let despawnedEntities = {};
 const UI_WIDTH = 381;
@@ -32,6 +32,8 @@ let PlayerHP = 100;
 let PlayerAtk = 10;
 let PlayerDef = 10;
 let statOffset = 0;
+let BossMaxHP = 200000;
+let BossHP = BossMaxHP;
 const COMBAT_INTERVAL = 1000;
 let combatResult = {
   victory: false,
@@ -105,6 +107,19 @@ function loadLevel(n) {
   generateLevel(lvl.terrain);
   generateEnemies(lvl.enemies, n);
   generateEntities(lvl.entities, n);
+}
+
+function drawHPBar(x, y, w, h, current, max) {
+  current = constrain(current, 0, max);
+  let ratio = current / max;
+  noStroke();
+  fill(80);
+  rect(x, y, w, h, 4);
+  fill(200, 40, 40);
+  rect(x, y, w * ratio, h, 4);
+  stroke(0);
+  noFill();
+  rect(x, y, w, h, 4);
 }
 
 function settUI() {
@@ -363,6 +378,10 @@ function draw() {
   view.offsetX = (windowWidth - VIRTUAL_WIDTH * view.scale) / 2;
   view.offsetY = (windowHeight - VIRTUAL_HEIGHT * view.scale) / 2;
   background(0);
+  if (currentLevel === 10){
+    background(images["bg"]);
+    gameState = "boss";
+  } 
   push();
   translate(view.offsetX, view.offsetY);
   scale(view.scale);
@@ -472,13 +491,12 @@ function draw() {
     textAlign(LEFT);
   }
   updateMusic();
-  if (currentLevel === 10){
-    background(images["bg"]);
-    gameState = "boss";
-  }
   FightMusic.setVolume(musicVolume);
   BossMusic.setVolume(musicVolume);
   StrollMusic.setVolume(musicVolume);
+  if (gameState == "boss") {
+    drawHPBar(510, 40, 500, 10, BossHP, BossMaxHP);
+  }
   pop();
 }
 
@@ -710,12 +728,5 @@ function updateMusic() {
   } 
   else {
     playMusic(StrollMusic);
-  }
-}
-
-function setMusicVolume(v) {
-  musicVolume = constrain(v, 0, 1);
-  if (currentMusic) {
-    currentMusic.setVolume(musicVolume);
   }
 }

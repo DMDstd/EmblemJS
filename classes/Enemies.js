@@ -64,7 +64,7 @@ const ENEMY_TYPES = {
   },
     7: {
     name: "The Chitin King",
-    hp: 200000,
+    hp: BossMaxHP,
     atk: 5000,
     def: 2000,
     img: "SpiderKing",
