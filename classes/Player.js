@@ -86,7 +86,8 @@ hitbox() {
         nx < w.x + w.size &&
         nx + this.size > w.x &&
         ny < w.y + w.size &&
-        ny + this.size > w.y
+        ny + this.size > w.y &&
+        Jesus == 0
       ) {
         console.log("kolize brasko");
         return true;

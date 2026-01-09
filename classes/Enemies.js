@@ -41,8 +41,8 @@ const ENEMY_TYPES = {
     atk: 80,
     def: 60,
     img: "PurpleSlime",
-    goldGain: 2,
-    expGain: 3
+    goldGain: 8,
+    expGain: 12
   },
     5: {
     name: "White Slime",
@@ -50,8 +50,8 @@ const ENEMY_TYPES = {
     atk: 125,
     def: 50,
     img: "WhiteSlime",
-    goldGain: 2,
-    expGain: 3
+    goldGain: 15,
+    expGain: 20
   },
     6: {
     name: "Pink Slime",
@@ -59,8 +59,8 @@ const ENEMY_TYPES = {
     atk: 110,
     def: 80,
     img: "PinkSlime",
-    goldGain: 2,
-    expGain: 3
+    goldGain: 17,
+    expGain: 22
   },
     7: {
     name: "The Chitin King",
@@ -73,6 +73,8 @@ const ENEMY_TYPES = {
   }
 };
 
+let round = 0;
+
 function startCombat(enemy) {
   currentEnemy = enemy;
   gameState = "combat";
@@ -84,22 +86,32 @@ function updateCombat() {
   if (millis() - lastCombatTick < COMBAT_INTERVAL) return;
   lastCombatTick = millis();
   // Enemy → Player
+  if (round <= 15) {
+    round++;
+  }
+  let DoT = round * DoTLevel;
   let dmgToPlayer = currentEnemy.atk - player.def;
   if (dmgToPlayer >= 0) {
     player.hp -= dmgToPlayer;
   }
   // Player → Enemy
-  let dmgToEnemy = player.atk - currentEnemy.def;
+  let dmgToEnemy = player.atk - currentEnemy.def + DoT;
   if (dmgToEnemy >= 0) {
     currentEnemy.hp -= dmgToEnemy;
   }
   // Check outcomes
   if (player.hp <= 0) {
     player.hp = 0;
+    DoT = 0;
+    round = 0;
     endCombat(false);
   } else if (currentEnemy.hp <= 0) {
+    DoT = 0;
+    round = 0;
     endCombat(true);
   } else if (dmgToPlayer <= 0 && dmgToEnemy <= 0){
+    DoT = 0;
+    round = 0;
     player.hp = 0;
     endCombat(false);
   }

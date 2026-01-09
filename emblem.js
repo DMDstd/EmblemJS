@@ -10,7 +10,7 @@ let keys = {};
 let musicVolume = 0.5;
 let currentTrack = null;
 const T_S = 59;
-let currentLevel = 4;
+let currentLevel = 1;
 let defeatedEnemies = {};
 let despawnedEntities = {};
 const UI_WIDTH = 381;
@@ -26,7 +26,7 @@ let yellowKey = 1;
 let blueKey = 1;
 let redKey = 1;
 let gold = 0;
-let exp = 0;
+let exp = 300;
 let perks = 0;
 let PlayerHP = 100;
 let PlayerAtk = 10;
@@ -34,6 +34,8 @@ let PlayerDef = 10;
 let statOffset = 0;
 let BossMaxHP = 200000;
 let BossHP = BossMaxHP;
+let DoTLevel = 0;
+let Jesus = 0;
 const COMBAT_INTERVAL = 1000;
 let combatResult = {
   victory: false,
@@ -251,6 +253,23 @@ function shopUI() {
     gold -= 40;
     mouseIsPressed = false;
   }
+  image(images["shop"], 260, 900, 30, 30);
+  text("Jesus perk - 3 perk points", 160 , 870);
+  image(images["shop"], 690, 900, 30, 30);
+  text("Damage over time perk - 1 point per level", 510 , 870);
+  image(images["shop"], 1120, 900 , 30, 30);
+  text("WIP", 1100 , 870);
+   if(mouseIsPressed && m.x >= 260 && m.x <= 290 && m.y >= 900 && m.y <= 930 && perks >= 3){
+    Jesus = 1;
+    perks -= 3;
+    mouseIsPressed = false;
+  }else if(mouseIsPressed && m.x >= 690 && m.x <= 720 && m.y >= 900 && m.y <= 930 && perks >= 1){
+    DoTLevel++;
+    perks -= 1;
+    mouseIsPressed = false;
+  }else if(mouseIsPressed && m.x >= 1120 && m.x <= 1150 && m.y >= 900 && m.y <= 930 && perks >= 3){
+    mouseIsPressed = false;
+  }
 }
 
 function drawCombatWindow() {
@@ -316,7 +335,7 @@ function drawUI() {
   textSize(16);
   text(`Floor: ${currentLevel}`, 20, 60);
   image(images["FenorisR1"], 150, 50, 200, 300);
-  text("Fenoris", 20, 100);
+  text("Perk points: " + perks, 20, 100);
   textSize(14);
   image(images["heart"], 20, 110, 30, 30);
   text(": " + player.hp, 54, 130);
@@ -345,6 +364,10 @@ function drawUI() {
   text(`: ${currentTarget.atk}`, 54, 560);
   image(images["shield"], 20, 570, 30, 30);
   text(`: ${currentTarget.def}`, 54, 590);
+  image(images["coins"], 20, 600, 30, 30);
+  text(`: ${currentTarget.goldGain}`, 54, 620);
+  image(images["XP"], 20, 630, 30, 30);
+  text(`: ${currentTarget.expGain}`, 54, 650);
   }
   if(currentTarget && currentTargetSwitch == 4) {
     textSize(16);
