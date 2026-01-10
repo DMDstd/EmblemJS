@@ -10,7 +10,7 @@ let keys = {};
 let musicVolume = 0.5;
 let currentTrack = null;
 const T_S = 59;
-let currentLevel = 2;
+let currentLevel = 8;
 let defeatedEnemies = {};
 let despawnedEntities = {};
 const UI_WIDTH = 381;
@@ -105,7 +105,7 @@ function preload() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
   player = new Player(T_S, T_S, T_S/1.3, images["FenorisL1"], images["FenorisR1"]);
-  projectile = new Projectile();
+  projectile = new Projectile(player.x + player.size/2, player.y + player.size/2, 10, "blue");
   buttons.push(new Button(-360, 10, 30, 30, "settings", "sett"));
   buttons.push(new Button(-320, 10, 30, 30, "shop", "shop"));
   loadLevel(currentLevel);
@@ -407,7 +407,6 @@ function draw() {
   view.scale = min(scaleX, scaleY);
   view.offsetX = (windowWidth - VIRTUAL_WIDTH * view.scale) / 2;
   view.offsetY = (windowHeight - VIRTUAL_HEIGHT * view.scale) / 2;
-  background(0);
   if (currentLevel === 8){
     background(images["bg"]);
     gameState = "boss";
@@ -475,8 +474,7 @@ function draw() {
     exp-=100;
     perks++;
   }
-  Projectile.display();
-  player.hitbox();
+  //player.hitbox();
   updateHoverTarget(enemies, buttons, entities);
   if (currentTarget && currentTargetSwitch == 3 && mouseIsPressed) {
     shop = 1;
@@ -528,6 +526,11 @@ function draw() {
   StrollMusic.setVolume(musicVolume);
   if (gameState === "boss") {
     drawHPBar(510, 40, 500, 10, BossHP, BossMaxHP);
+    if (mouseIsPressed) {
+      projectile.update();
+      projectile.display();
+      projectile.mousePressed();
+    }
   }
   pop();
 }
