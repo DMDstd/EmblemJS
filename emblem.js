@@ -407,10 +407,13 @@ function draw() {
   view.offsetX = (windowWidth - VIRTUAL_WIDTH * view.scale) / 2;
   view.offsetY = (windowHeight - VIRTUAL_HEIGHT * view.scale) / 2;
   background(0);
-  if (currentLevel === 10){
+  if (currentLevel === 8){
     background(images["bg"]);
     gameState = "boss";
-  } 
+  } else if (currentLevel != 8 && gameState == "boss") {
+    background(0);
+    gameState = "explore";
+  }
   push();
   translate(view.offsetX, view.offsetY);
   scale(view.scale);
@@ -471,10 +474,8 @@ function draw() {
     exp-=100;
     perks++;
   }
-  //player.hitbox();
-  if (gameState === "explore") {
-    updateHoverTarget(enemies, buttons, entities);
-  }
+  player.hitbox();
+  updateHoverTarget(enemies, buttons, entities);
   if (currentTarget && currentTargetSwitch == 3 && mouseIsPressed) {
     shop = 1;
     console.log("shop");
@@ -513,7 +514,7 @@ function draw() {
     fill(255, 0, 0);
     textAlign(CENTER);
     textSize(32);
-  text("GAME OVER", VIRTUAL_WIDTH / 3.3,VIRTUAL_HEIGHT / 2.5);
+    text("GAME OVER", VIRTUAL_WIDTH / 3.3, VIRTUAL_HEIGHT / 2.5);
     fill(0, 255, 0);
     textSize(26);
     text("RESPAWN", VIRTUAL_WIDTH / 3.3, VIRTUAL_HEIGHT / 2);
@@ -523,7 +524,7 @@ function draw() {
   FightMusic.setVolume(musicVolume);
   BossMusic.setVolume(musicVolume);
   StrollMusic.setVolume(musicVolume);
-  if (gameState == "boss") {
+  if (gameState === "boss") {
     drawHPBar(510, 40, 500, 10, BossHP, BossMaxHP);
   }
   pop();
@@ -545,7 +546,8 @@ function getWorldMouse() {
 function updateHoverTarget(enemies, buttons, entities) {
   currentTarget = null;
   let m = getWorldMouse();
-  for (let enemy of enemies) {
+  if (gameState === "explore") {
+    for (let enemy of enemies) {
     if (
       m.x >= enemy.x &&
       m.x <= enemy.x + enemy.w &&
@@ -571,12 +573,15 @@ function updateHoverTarget(enemies, buttons, entities) {
     }
     }
   }
+  }
   for (let button of buttons) {
     if (
       m.x >= button.x &&
       m.x <= button.x + button.w &&
       m.y >= button.y &&
-      m.y <= button.y + button.h
+      m.y <= button.y + button.h &&
+      gameState != "combat" &&
+      gameState != "gameover"
     ) {
       if(button.t == "sett") {
         currentTarget = button;
@@ -767,7 +772,7 @@ function playMusic(track) {
 }
 
 function updateMusic() {
-  if (currentLevel === 10) {
+  if (currentLevel === 8) {
     playMusic(BossMusic);
   } 
   else if (gameState === "combat" || gameState === "combatResult") {
