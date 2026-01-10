@@ -476,8 +476,6 @@ function draw() {
     exp-=100;
     perks++;
   }
-  Projectile.display();
-  player.hitbox();
   updateHoverTarget(enemies, buttons, entities);
   if (currentTarget && currentTargetSwitch == 3 && mouseIsPressed) {
     shop = 1;
