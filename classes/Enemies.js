@@ -46,9 +46,9 @@ const ENEMY_TYPES = {
   },
     5: {
     name: "White Slime",
-    hp: 200,
-    atk: 125,
-    def: 50,
+    hp: 430,
+    atk: 230,
+    def: 90,
     img: "WhiteSlime",
     goldGain: 15,
     expGain: 20
@@ -56,8 +56,8 @@ const ENEMY_TYPES = {
     6: {
     name: "Pink Slime",
     hp: 600,
-    atk: 110,
-    def: 80,
+    atk: 150,
+    def: 100,
     img: "PinkSlime",
     goldGain: 17,
     expGain: 22

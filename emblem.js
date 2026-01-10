@@ -10,7 +10,7 @@ let keys = {};
 let musicVolume = 0.5;
 let currentTrack = null;
 const T_S = 59;
-let currentLevel = 1;
+let currentLevel = 2;
 let defeatedEnemies = {};
 let despawnedEntities = {};
 const UI_WIDTH = 381;
@@ -22,15 +22,15 @@ let currentTargetSwitch = null;
 let shop = 0;
 let sett = 0;
 let lastCombatTick = 0;
-let yellowKey = 1;
+let yellowKey = 3;
 let blueKey = 1;
-let redKey = 1;
-let gold = 0;
-let exp = 300;
-let perks = 0;
-let PlayerHP = 100;
-let PlayerAtk = 10;
-let PlayerDef = 10;
+let redKey = -1;
+let gold = 72;
+let exp = 71;
+let perks = 1;
+let PlayerHP = 581;
+let PlayerAtk = 103;
+let PlayerDef = 82;
 let statOffset = 0;
 let BossMaxHP = 200000;
 let BossHP = BossMaxHP;
@@ -474,7 +474,7 @@ function draw() {
     exp-=100;
     perks++;
   }
-  player.hitbox();
+  //player.hitbox();
   updateHoverTarget(enemies, buttons, entities);
   if (currentTarget && currentTargetSwitch == 3 && mouseIsPressed) {
     shop = 1;
@@ -712,22 +712,22 @@ function generateEntities(map, levelNum) {
         entities.push(new Entity(px + T_S/3.3, py + T_S/20, 24, 56, 9, key));
       }
       if (tile === "i" && !despawnedEntities[key]) {
-        entities.push(new Entity(px + T_S/4, py + T_S/6, 30, 48, i, key));
+        entities.push(new Entity(px + T_S/4, py + T_S/6, 30, 48, "i", key));
       }
       if (tile === "j" && !despawnedEntities[key]) {
-        entities.push(new Entity(px + T_S/4, py + T_S/6, 30, 48, j, key));
+        entities.push(new Entity(px + T_S/4, py + T_S/6, 30, 48, "j", key));
       }
       if (tile === "k" && !despawnedEntities[key]) {
-        entities.push(new Entity(px + T_S/4, py + T_S/6, 30, 48, k, key));
+        entities.push(new Entity(px + T_S/4, py + T_S/6, 30, 48, "k", key));
       }
       if (tile === "l" && !despawnedEntities[key]) {
-        entities.push(new Entity(px, py, T_S, T_S, l, key));
+        entities.push(new Entity(px, py, T_S, T_S, "l", key));
       }
       if (tile === "m" && !despawnedEntities[key]) {
-        entities.push(new Entity(px, py, T_S, T_S, m, key));
+        entities.push(new Entity(px, py, T_S, T_S, "m", key));
       }
       if (tile === "n" && !despawnedEntities[key]) {
-        entities.push(new Entity(px, py, T_S, T_S, n, key));
+        entities.push(new Entity(px, py, T_S, T_S, "n", key));
       }
       if (tile === "a" && !despawnedEntities[key]) {
         entities.push(new Entity(px, py, T_S, T_S, "a", key));
