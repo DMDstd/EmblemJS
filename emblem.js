@@ -105,6 +105,7 @@ function preload() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
   player = new Player(T_S, T_S, T_S/1.3, images["FenorisL1"], images["FenorisR1"]);
+  projectile = new Projectile()
   buttons.push(new Button(-360, 10, 30, 30, "settings", "sett"));
   buttons.push(new Button(-320, 10, 30, 30, "shop", "shop"));
   loadLevel(currentLevel);
@@ -474,6 +475,7 @@ function draw() {
     exp-=100;
     perks++;
   }
+  Projectile.display();
   player.hitbox();
   updateHoverTarget(enemies, buttons, entities);
   if (currentTarget && currentTargetSwitch == 3 && mouseIsPressed) {
