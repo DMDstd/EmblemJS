@@ -10,7 +10,7 @@ let keys = {};
 let musicVolume = 0.5;
 let currentTrack = null;
 const T_S = 59;
-let currentLevel = 7;
+let currentLevel = 8;
 let defeatedEnemies = {};
 let despawnedEntities = {};
 const UI_WIDTH = 381;
@@ -36,6 +36,7 @@ let BossMaxHP = 200000;
 let BossHP = BossMaxHP;
 let DoTLevel = 0;
 let Jesus = 0;
+let jumping = 0;
 const COMBAT_INTERVAL = 1000;
 let combatResult = {
   victory: false,
@@ -420,7 +421,6 @@ function draw() {
   drawUI();
   translate(UI_WIDTH, 0);
   if(gameState === "boss") {
-    player.move("down", walls, water, enemies);
   if (keyIsDown(LEFT_ARROW) || keyIsDown(65)) {
     player.move("left", walls, water, enemies);
   }
@@ -428,8 +428,13 @@ function draw() {
     player.move("right", walls, water, enemies);
   }
   if (keyIsDown(UP_ARROW)|| keyIsDown(87)) {
-    player.jump(walls, water, enemies);
-    player.move("down", walls, water, enemies) = false;
+    if(jumping == 0){
+    player.jump(player.y, walls, water, enemies);
+    }else{
+      player.move("down", walls, water, enemies);
+    }
+  }else{
+    player.move("down", walls, water, enemies);
   }
   }
   if (gameState === "explore") {
@@ -440,7 +445,9 @@ function draw() {
     player.move("right", walls, water, enemies);
   }
   if (keyIsDown(UP_ARROW) || keyIsDown(87)) {
+    if(jumping == 0){
     player.move("up", walls, water, enemies);
+    }
   }
   if (keyIsDown(DOWN_ARROW) || keyIsDown(83)) {
     player.move("down", walls, water, enemies);

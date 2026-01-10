@@ -39,11 +39,16 @@ move(d, walls, water, enemies) {
     startInteraction(result.entity, player);
   }
 }
-jump(walls, water, enemies) {
+jump(ee,walls, water, enemies) {
   let nx = this.x;
   let ny = this.y;
+
   ////jump
-  ny -= this.speed;
+  if(this.y > VIRTUAL_HEIGHT - T_S *4){
+    ny -= this.speed;
+  }else{
+    jumping = 1;
+  }
   ////
   let result = this.collides(nx, ny, walls, water, enemies, entities);
   // Move only if no collision
