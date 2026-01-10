@@ -40,7 +40,7 @@ move(d, walls, water, enemies) {
     startInteraction(result.entity, player);
   }
 }
-jump(ee,walls, water, enemies) {
+jump(walls, water, enemies) {
   let nx = this.x;
   let ny = this.y;
   let result = this.collides(nx, ny, walls, water, enemies, entities);
