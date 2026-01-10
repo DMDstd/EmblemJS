@@ -513,10 +513,10 @@ function draw() {
     fill(255, 0, 0);
     textAlign(CENTER);
     textSize(32);
-    text("GAME OVER", windowWidth / 3.3, windowHeight / 2.5);
+  text("GAME OVER", VIRTUAL_WIDTH / 3.3,VIRTUAL_HEIGHT / 2.5);
     fill(0, 255, 0);
     textSize(26);
-    text("RESPAWN", windowWidth / 3.3, windowHeight / 2);
+    text("RESPAWN", VIRTUAL_WIDTH / 3.3, VIRTUAL_HEIGHT / 2);
     textAlign(LEFT);
   }
   updateMusic();
