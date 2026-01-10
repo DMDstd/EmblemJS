@@ -10,7 +10,7 @@ let keys = {};
 let musicVolume = 0.5;
 let currentTrack = null;
 const T_S = 59;
-let currentLevel = 7;
+let currentLevel = 8;
 let defeatedEnemies = {};
 let despawnedEntities = {};
 const UI_WIDTH = 381;
@@ -104,7 +104,7 @@ function preload() {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  player = new Player(T_S, T_S, T_S/1.3, images["FenorisL1"], images["FenorisR1"]);
+  player = new Player(T_S, VIRTUAL_HEIGHT - T_S*5, T_S/1.3, images["FenorisL1"], images["FenorisR1"]);
   projectile = new Projectile(player.x + player.size/2, player.y + player.size/2, 10, "blue");
   buttons.push(new Button(-360, 10, 30, 30, "settings", "sett"));
   buttons.push(new Button(-320, 10, 30, 30, "shop", "shop"));
@@ -420,7 +420,6 @@ function draw() {
   drawUI();
   translate(UI_WIDTH, 0);
   if(gameState === "boss") {
-    player.move("down", walls, water, enemies);
   if (keyIsDown(LEFT_ARROW) || keyIsDown(65)) {
     player.move("left", walls, water, enemies);
   }
@@ -428,7 +427,9 @@ function draw() {
     player.move("right", walls, water, enemies);
   }
   if (keyIsDown(UP_ARROW)|| keyIsDown(87)) {
-    player.jump(walls, water, enemies);
+    if (!player.jumping && (player.y > VIRTUAL_HEIGHT - T_S*2.7)) {
+      player.jumping = true;
+    }
   }
   }
   if (gameState === "explore") {
@@ -530,6 +531,11 @@ function draw() {
       projectile.update();
       projectile.display();
       projectile.mousePressed();
+    }
+    if (player.jumping) {
+      player.jump(walls, water, enemies);
+    } else {
+      player.move("down", walls, water, enemies);
     }
   }
   pop();

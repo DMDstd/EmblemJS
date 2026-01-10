@@ -10,6 +10,7 @@ class Player {
     this.hp = PlayerHP;
     this.atk = PlayerAtk;
     this.def = PlayerDef;
+    this.jumping = false;
   }
 move(d, walls, water, enemies) {
   let nx = this.x;
@@ -42,16 +43,17 @@ move(d, walls, water, enemies) {
 jump(walls, water, enemies) {
   let nx = this.x;
   let ny = this.y;
-  ////jump
-  ny -= this.speed;
-  ////
   let result = this.collides(nx, ny, walls, water, enemies, entities);
-  // Move only if no collision
-  if (!result) {
-    this.x = nx;
-    this.y = ny;
-  } else if (result.entity && gameState === "boss") {
-    startInteraction(result.entity, player);
+  if (this.y < VIRTUAL_HEIGHT - T_S*3.7) {
+    this.jumping = false;
+  } else {
+    ny -= this.speed;
+    result = this.collides(nx, ny, walls, water, enemies, entities);
+    if (!result) {
+      this.y = ny;
+    } else {
+      this.jumping = false;
+    }
   }
 }
 teleport(x, y) {
