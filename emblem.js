@@ -11,7 +11,6 @@ let musicVolume = 0.5;
 let currentTrack = null;
 const T_S = 59;
 let currentLevel = 8;
-let currentLevel = 8;
 let defeatedEnemies = {};
 let despawnedEntities = {};
 const UI_WIDTH = 381;
