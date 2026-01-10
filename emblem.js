@@ -10,7 +10,7 @@ let keys = {};
 let musicVolume = 0.5;
 let currentTrack = null;
 const T_S = 59;
-let currentLevel = 8;
+let currentLevel = 2;
 let defeatedEnemies = {};
 let despawnedEntities = {};
 const UI_WIDTH = 381;
@@ -420,13 +420,14 @@ function draw() {
   drawUI();
   translate(UI_WIDTH, 0);
   if(gameState === "boss") {
+    player.move("down", walls, water, enemies);
   if (keyIsDown(LEFT_ARROW) || keyIsDown(65)) {
     player.move("left", walls, water, enemies);
   }
   if (keyIsDown(RIGHT_ARROW) || keyIsDown(68)) {
     player.move("right", walls, water, enemies);
   }
-  if (keyIsDown(UP_ARROW) || keyIsDown(87)) {
+  if (keyIsDown(UP_ARROW)|| keyIsDown(87)) {
     player.jump(walls, water, enemies);
   }
   }
@@ -474,7 +475,8 @@ function draw() {
     exp-=100;
     perks++;
   }
-  //player.hitbox();
+  Projectile.display();
+  player.hitbox();
   updateHoverTarget(enemies, buttons, entities);
   if (currentTarget && currentTargetSwitch == 3 && mouseIsPressed) {
     shop = 1;
