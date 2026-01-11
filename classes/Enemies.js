@@ -70,7 +70,43 @@ const ENEMY_TYPES = {
     img: "SpiderKing",
     goldGain: 0,
     expGain: 0
-  }
+  },
+    8: {
+    name: "Pink Slime",
+    hp: 600,
+    atk: 150,
+    def: 100,
+    img: "PinkSlime",
+    goldGain: 17,
+    expGain: 22
+  },
+    9: {
+    name: "Pink Slime",
+    hp: 600,
+    atk: 150,
+    def: 100,
+    img: "PinkSlime",
+    goldGain: 17,
+    expGain: 22
+  },
+    10: {
+    name: "Pink Slime",
+    hp: 600,
+    atk: 150,
+    def: 100,
+    img: "PinkSlime",
+    goldGain: 17,
+    expGain: 22
+  },
+    11: {
+    name: "Pink Slime",
+    hp: 600,
+    atk: 150,
+    def: 100,
+    img: "PinkSlime",
+    goldGain: 17,
+    expGain: 22
+  },
 };
 
 let round = 0;
