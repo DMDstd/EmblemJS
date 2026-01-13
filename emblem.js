@@ -14,13 +14,15 @@ let currentLevel = 1;
 let defeatedEnemies = {};
 let despawnedEntities = {};
 const UI_WIDTH = 381;
-let gameState = "explore";
+let gameState;
 let currentEnemy = null;
 let currentEntity = null;
 let currentTarget = null;
 let currentTargetSwitch = null;
 let shop = 0;
 let sett = 0;
+let Menusett = 0;
+let first = 0;
 let lastCombatTick = 0;
 let yellowKey = 1;
 let blueKey = 1;
@@ -34,9 +36,13 @@ let PlayerDef = 10;
 let statOffset = 0;
 let BossMaxHP = 200000;
 let BossHP = BossMaxHP;
+let BossLevel = 8;
 let DoTLevel = 0;
 let Jesus = 0;
 let jumping = 0;
+let startBtnHover = false;
+let settingsBtnHover = false;
+let respawnHover = false;
 const COMBAT_INTERVAL = 1000;
 let combatResult = {
   victory: false,
@@ -105,11 +111,9 @@ function preload() {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  player = new Player(T_S, T_S, T_S/1.3, images["FenorisL1"], images["FenorisR1"]);
-  projectile = new Projectile(player.x + player.size/2, player.y + player.size/2, 10, "blue");
-  buttons.push(new Button(-360, 10, 30, 30, "settings", "sett"));
-  buttons.push(new Button(-320, 10, 30, 30, "shop", "shop"));
-  loadLevel(currentLevel);
+  gameState = "menu";
+  drawStartupMenu();
+  //projectile = new Projectile(player.x + player.size/2, player.y + player.size/2, 10, "blue");
 }
 
 function loadLevel(n) {
@@ -183,6 +187,67 @@ function settUI() {
   ) {
     musicVolume = constrain(
       (m.x - sliderX) / sliderW,
+      0,
+      1
+    );
+  }
+  textAlign(RIGHT);
+  textSize(14);
+  text(Math.round(musicVolume * 100) + "%", sliderX + sliderW, sliderY + 30);
+}
+
+function MenuSettUI() {
+  const w = VIRTUAL_WIDTH;
+  const h = VIRTUAL_HEIGHT;
+  const x = 0;
+  const y = 0;
+  const closeSize = 30;
+  const sliderX = 80;
+  const sliderY = 120;
+  const sliderW = w - 160;
+  const sliderH = 6;
+  const knobR = 10;
+  let mx = (mouseX - view.offsetX) / view.scale;
+  let my = (mouseY - view.offsetY) / view.scale;
+  noStroke();
+  fill(20, 220);
+  rect(x, y, w, h);
+  fill(255);
+  textAlign(CENTER);
+  textSize(20);
+  text("SETTINGS", w / 2, 40);
+  image(images["cross"], w - closeSize - 10, 10, closeSize, closeSize);
+  if (
+    keyIsDown(ESCAPE) ||
+    (mouseIsPressed &&
+      mx >= w - closeSize - 10 &&
+      mx <= w - 10 &&
+      my >= 10 &&
+      my <= 10 + closeSize)
+  ) {
+    Menusett = 0;
+    gameState = "menu";
+    return;
+  }
+  textAlign(LEFT);
+  textSize(16);
+  text("Master Volume", sliderX, sliderY - 20);
+  stroke(150);
+  strokeWeight(sliderH);
+  line(sliderX, sliderY, sliderX + sliderW, sliderY);
+  let knobX = sliderX + musicVolume * sliderW;
+  noStroke();
+  fill(255);
+  circle(knobX, sliderY, knobR * 2);
+  if (
+    mouseIsPressed &&
+    mx >= sliderX &&
+    mx <= sliderX + sliderW &&
+    my >= sliderY - 15 &&
+    my <= sliderY + 15
+  ) {
+    musicVolume = constrain(
+      (mx - sliderX) / sliderW,
       0,
       1
     );
@@ -403,18 +468,32 @@ function drawUI() {
 }
 
 function draw() {
+  if (gameState == "SETTMENU") {
+    MenuSettUI();
+    return;
+  }
+  if (gameState == "menu") {
+    drawStartupMenu();
+    return;
+  }
+  if (first == 0) {
+    buttons.push(new Button(-360, 10, 30, 30, "settings", "sett"));
+    buttons.push(new Button(-320, 10, 30, 30, "shop", "shop"));
+    first = 1;
+  }
   let scaleX = windowWidth / VIRTUAL_WIDTH;
   let scaleY = windowHeight / VIRTUAL_HEIGHT;
   view.scale = min(scaleX, scaleY);
   view.offsetX = (windowWidth - VIRTUAL_WIDTH * view.scale) / 2;
   view.offsetY = (windowHeight - VIRTUAL_HEIGHT * view.scale) / 2;
-  if (currentLevel === 8){
+  if (currentLevel === BossLevel){
     background(images["bg"]);
     gameState = "boss";
-  } else if (currentLevel != 8 && gameState == "boss") {
+  } else if (currentLevel != BossLevel && gameState == "boss") {
     background(0);
     gameState = "explore";
   }
+  textAlign(LEFT);
   push();
   translate(view.offsetX, view.offsetY);
   scale(view.scale);
@@ -513,16 +592,7 @@ function draw() {
   }
 }
   if (gameState === "gameover") {
-    noStroke();
-    background(0);
-    fill(255, 0, 0);
-    textAlign(CENTER);
-    textSize(32);
-    text("GAME OVER", VIRTUAL_WIDTH / 3.3, VIRTUAL_HEIGHT / 2.5);
-    fill(0, 255, 0);
-    textSize(26);
-    text("RESPAWN", VIRTUAL_WIDTH / 3.3, VIRTUAL_HEIGHT / 2);
-    textAlign(LEFT);
+    drawGameOver();
   }
   updateMusic();
   FightMusic.setVolume(musicVolume);
@@ -541,7 +611,114 @@ function draw() {
       player.move("down", walls, water, enemies);
     }
   }
-  pop();
+pop();
+}
+
+function drawStartupMenu() {
+  if (images["bg"]) {
+    image(images["bg"], 0, 0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
+  } else {
+    background(10);
+  }
+  noStroke();
+  fill(0, 170);
+  rect(0, 0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
+  fill(255);
+  textAlign(CENTER, CENTER);
+  textSize(64);
+  text("Maze of Emblem", VIRTUAL_WIDTH / 2, VIRTUAL_HEIGHT / 2 - 220);
+  const bw = 320;
+  const bh = 70;
+  const bx = VIRTUAL_WIDTH / 2 - bw / 2;
+  const startY = VIRTUAL_HEIGHT / 2 - 40;
+  const gap = 25;
+  let mx = (mouseX - view.offsetX) / view.scale;
+  let my = (mouseY - view.offsetY) / view.scale;
+  // ---------- START BUTTON ----------
+  startBtnHover =
+  mx >= bx &&
+  mx <= bx + bw &&
+  my >= startY &&
+  my <= startY + bh;
+  fill(startBtnHover ? color(90, 220, 120) : color(60, 180, 80));
+  rect(bx, startY, bw, bh, 10);
+  fill(255);
+  textSize(30);
+  text("START GAME", bx + bw / 2, startY + bh / 2);
+  if (mouseIsPressed && startBtnHover) {
+    respawn();
+    mouseIsPressed = false;
+    return;
+  }
+  // ---------- SETTINGS BUTTON ----------
+  let setY = startY + bh + gap;
+  settingsBtnHover =
+  mx >= bx &&
+  mx <= bx + bw &&
+  my >= setY &&
+  my <= setY + bh;
+  fill(settingsBtnHover ? color(100, 100, 130) : color(70, 70, 90));
+  rect(bx, setY, bw, bh, 10);
+  fill(255);
+  textSize(28);
+  text("SETTINGS", bx + bw / 2, setY + bh / 2);
+  if (mouseIsPressed && settingsBtnHover) {
+    Menusett = 1;
+    gameState = "SETTMENU";
+    mouseIsPressed = false;
+    return;
+  }
+  textAlign(LEFT);
+}
+
+function drawGameOver() {
+  let m = getWorldMouse();
+  noStroke();
+  fill(0, 255);
+  rect(0, 0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
+  fill(255, 60, 60);
+  textAlign(CENTER, CENTER);
+  textSize(64);
+  text("GAME OVER", VIRTUAL_WIDTH / 2, VIRTUAL_HEIGHT / 2 - 120);
+  textSize(24);
+  fill(200);
+  text("You have fallen…", VIRTUAL_WIDTH / 2, VIRTUAL_HEIGHT / 2 - 70);
+  const bw = 260;
+  const bh = 70;
+  const bx = VIRTUAL_WIDTH / 2 - bw / 2;
+  const by = VIRTUAL_HEIGHT / 2 + 10;
+  respawnHover =
+  m.x >= bx &&
+  m.x <= bx + bw &&
+  m.y >= by &&
+  m.y <= by + bh;
+  fill(respawnHover ? color(80, 220, 80) : color(60, 170, 60));
+  rect(bx, by, bw, bh, 10);
+  fill(255);
+  textSize(30);
+  text("RESPAWN", bx + bw / 2, by + bh / 2);
+  if (respawnHover && mouseIsPressed) {
+    mouseIsPressed = false;
+    respawn();
+  }
+}
+
+function respawn() {
+  PlayerHP = 100;
+  PlayerAtk = 10;
+  PlayerDef = 10;
+  defeatedEnemies = {};
+  despawnedEntities = {};
+  currentLevel = 1;
+  loadLevel(currentLevel);
+  gameState = "explore";
+  gold = 0;
+  perks = 0;
+  exp = 0;
+  blueKey = 1;
+  yellowKey = 1;
+  redKey = 1;
+  player = new Player(T_S, T_S, T_S/1.3, images["FenorisL1"], images["FenorisR1"]);
 }
 
 function windowResized() {
