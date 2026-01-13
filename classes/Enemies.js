@@ -72,38 +72,74 @@ const ENEMY_TYPES = {
     expGain: 0
   },
     8: {
-    name: "Pink Slime",
+    name: "Goblin",
     hp: 600,
     atk: 150,
     def: 100,
-    img: "PinkSlime",
+    img: "goblin",
     goldGain: 17,
     expGain: 22
   },
     9: {
-    name: "Pink Slime",
+    name: "Gold Goblin",
     hp: 600,
     atk: 150,
     def: 100,
-    img: "PinkSlime",
+    img: "goblinG",
     goldGain: 17,
     expGain: 22
   },
     10: {
-    name: "Pink Slime",
+    name: "Blue Goblin",
     hp: 600,
     atk: 150,
     def: 100,
-    img: "PinkSlime",
+    img: "bluegoblin",
     goldGain: 17,
     expGain: 22
   },
     11: {
-    name: "Pink Slime",
+    name: "Glazed Blue Goblin",
     hp: 600,
     atk: 150,
     def: 100,
-    img: "PinkSlime",
+    img: "bluegobling",
+    goldGain: 17,
+    expGain: 22
+  },
+    12: {
+    name: "Sand Goblin",
+    hp: 600,
+    atk: 150,
+    def: 100,
+    img: "sandgoblin",
+    goldGain: 17,
+    expGain: 22
+  },
+    13: {
+    name: "Glazed Sand Goblin",
+    hp: 600,
+    atk: 150,
+    def: 100,
+    img: "sandgobling",
+    goldGain: 17,
+    expGain: 22
+  },
+    14: {
+    name: "Red Goblin",
+    hp: 600,
+    atk: 150,
+    def: 100,
+    img: "redgoblin",
+    goldGain: 17,
+    expGain: 22
+  },
+    15: {
+    name: "Glazed Red Goblin",
+    hp: 600,
+    atk: 150,
+    def: 100,
+    img: "redgobling",
     goldGain: 17,
     expGain: 22
   },

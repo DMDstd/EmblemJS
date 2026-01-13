@@ -104,6 +104,14 @@ function preload() {
   images["GateR2"] = loadImage('./images/GateR2.png');
   images["GateY2"] = loadImage('./images/GateY2.png');
   images["cross"] = loadImage('./images/Cross.png');
+  images["bluegoblin"] = loadImage('./images/BlueGoblin.png');
+  images["bluegobling"] = loadImage('./images/BlueGoblinG.png');
+  images["redgoblin"] = loadImage('./images/RedGoblin.png');
+  images["redgobling"] = loadImage('./images/RedGoblinG.png');
+  images["sandgoblin"] = loadImage('./images/SandGoblin.png');
+  images["sandgobling"] = loadImage('./images/SandGoblinG.png');
+  images["goblin"] = loadImage('./images/Goblin.png');
+  images["gobling"] = loadImage('./images/GoblinG.png');
   BossMusic = loadSound('./tracks/BossMusic.m4a');
   FightMusic = loadSound('./tracks/Combat.m4a');
   StrollMusic = loadSound('./tracks/stroll_track.wav');
