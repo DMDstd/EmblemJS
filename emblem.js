@@ -121,7 +121,6 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   gameState = "menu";
   drawStartupMenu();
-  //projectile = new Projectile(player.x + player.size/2, player.y + player.size/2, 10, "blue");
 }
 
 function loadLevel(n) {
@@ -294,7 +293,7 @@ function shopUI() {
   image(images["shop"], 1135, 430 , 30, 30);
   text("Defence Potion - 10 Gold", 1030, 90);
   if(mouseIsPressed && m.x >= 195 && m.x <= 225 && m.y >= 430 && m.y <= 460 && gold >= price){
-    player.hp += 10;
+    player.hp += 30;
     gold -= price;
     mouseIsPressed = false;
   }else if(mouseIsPressed && m.x >= 665 && m.x <= 695 && m.y >= 430 && m.y <= 460 && gold >= price){
@@ -332,6 +331,7 @@ function shopUI() {
   text("Jesus perk - 3 perk points", 160 , 870);
   image(images["shop"], 690, 900, 30, 30);
   text("Damage over time perk - 1 point per level", 510 , 870);
+  text(`Damage over time perk current level = ${DoTLevel}` , 510 , 955);
   image(images["shop"], 1120, 900 , 30, 30);
   text("WIP", 1100 , 870);
    if(mouseIsPressed && m.x >= 260 && m.x <= 290 && m.y >= 900 && m.y <= 930 && perks >= 3){
@@ -609,9 +609,9 @@ function draw() {
   if (gameState === "boss") {
     drawHPBar(510, 40, 500, 10, BossHP, BossMaxHP);
     if (mouseIsPressed) {
-      projectile.update();
+      projectile = new Projectile(player.x + player.size/2, player.y + player.size/2, 10, "blue");
       projectile.display();
-      projectile.mousePressed();
+      mouseIsPressed = false;
     }
     if (player.jumping) {
       player.jump(walls, water, enemies);
@@ -712,21 +712,40 @@ function drawGameOver() {
 }
 
 function respawn() {
-  PlayerHP = 100;
-  PlayerAtk = 10;
-  PlayerDef = 10;
-  defeatedEnemies = {};
-  despawnedEntities = {};
-  currentLevel = 1;
-  loadLevel(currentLevel);
-  gameState = "explore";
-  gold = 0;
-  perks = 0;
-  exp = 0;
-  blueKey = 1;
-  yellowKey = 1;
-  redKey = 1;
-  player = new Player(T_S, T_S, T_S/1.3, images["FenorisL1"], images["FenorisR1"]);
+  if (Math.round(musicVolume * 100) == 86) {
+    PlayerHP = 200000;
+    PlayerAtk = 3000;
+    PlayerDef = 3000;
+    defeatedEnemies = {};
+    despawnedEntities = {};
+    currentLevel = 7;
+    loadLevel(currentLevel);
+    gameState = "explore";
+    gold = 200;
+    perks = 5;
+    exp = 0;
+    blueKey = 1;
+    yellowKey = 1;
+    redKey = 1;
+    player = new Player(T_S, VIRTUAL_HEIGHT - 3*T_S, T_S/1.3, images["FenorisL1"], images["FenorisR1"]);
+  } else {
+    PlayerHP = 1124;
+    PlayerAtk = 274;
+    PlayerDef = 238;
+    defeatedEnemies = {};
+    despawnedEntities = {};
+    currentLevel = 3;
+    loadLevel(currentLevel);
+    gameState = "explore";
+    gold = 156;
+    perks = 7;
+    exp = 54;
+    blueKey = 1;
+    yellowKey = 1;
+    redKey = 1;
+    player = new Player(T_S, T_S, T_S/1.3, images["FenorisL1"], images["FenorisR1"]);
+  }
+  
 }
 
 function windowResized() {
@@ -865,6 +884,30 @@ function generateEnemies(map, levelNum) {
       if (tile === "6" && !defeatedEnemies[key]) {
         enemies.push(new Enemy(px, py, T_S, T_S, 6, key));
       }
+      if (tile === "7" && !defeatedEnemies[key]) {
+        enemies.push(new Enemy(px, py, T_S, T_S, 8, key));
+      }
+      if (tile === "8" && !defeatedEnemies[key]) {
+        enemies.push(new Enemy(px, py, T_S, T_S, 9, key));
+      }
+      if (tile === "9" && !defeatedEnemies[key]) {
+        enemies.push(new Enemy(px, py, T_S, T_S, 10, key));
+      }
+      if (tile === "a" && !defeatedEnemies[key]) {
+        enemies.push(new Enemy(px, py, T_S, T_S, 11, key));
+      }
+      if (tile === "b" && !defeatedEnemies[key]) {
+        enemies.push(new Enemy(px, py, T_S, T_S, 12, key));
+      }
+      if (tile === "c" && !defeatedEnemies[key]) {
+        enemies.push(new Enemy(px, py, T_S, T_S, 13, key));
+      }
+      if (tile === "d" && !defeatedEnemies[key]) {
+        enemies.push(new Enemy(px, py, T_S, T_S, 14, key));
+      }
+      if (tile === "e" && !defeatedEnemies[key]) {
+        enemies.push(new Enemy(px, py, T_S, T_S, 15, key));
+      }
       if (tile === "Z" && !defeatedEnemies[key]) {
         enemies.push(new Enemy(px, py, T_S*4, T_S*6, 7, key));
       }
@@ -971,7 +1014,7 @@ function playMusic(track) {
 }
 
 function updateMusic() {
-  if (currentLevel === 8) {
+  if (currentLevel === BossLevel) {
     playMusic(BossMusic);
   } 
   else if (gameState === "combat" || gameState === "combatResult") {

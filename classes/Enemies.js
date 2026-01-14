@@ -73,39 +73,39 @@ const ENEMY_TYPES = {
   },
     8: {
     name: "Goblin",
-    hp: 600,
-    atk: 150,
-    def: 100,
+    hp: 800,
+    atk: 350,
+    def: 190,
     img: "goblin",
-    goldGain: 17,
-    expGain: 22
+    goldGain: 25,
+    expGain: 30
   },
     9: {
     name: "Gold Goblin",
-    hp: 600,
-    atk: 150,
-    def: 100,
-    img: "goblinG",
-    goldGain: 17,
-    expGain: 22
+    hp: 1200,
+    atk: 390,
+    def: 290,
+    img: "gobling",
+    goldGain: 50,
+    expGain: 30
   },
     10: {
     name: "Blue Goblin",
-    hp: 600,
+    hp: 1000,
     atk: 150,
     def: 100,
     img: "bluegoblin",
-    goldGain: 17,
-    expGain: 22
+    goldGain: 30,
+    expGain: 35
   },
     11: {
     name: "Glazed Blue Goblin",
-    hp: 600,
+    hp: 1400,
     atk: 150,
     def: 100,
     img: "bluegobling",
-    goldGain: 17,
-    expGain: 22
+    goldGain: 60,
+    expGain: 35
   },
     12: {
     name: "Sand Goblin",
@@ -113,8 +113,8 @@ const ENEMY_TYPES = {
     atk: 150,
     def: 100,
     img: "sandgoblin",
-    goldGain: 17,
-    expGain: 22
+    goldGain: 35,
+    expGain: 40
   },
     13: {
     name: "Glazed Sand Goblin",
@@ -122,26 +122,26 @@ const ENEMY_TYPES = {
     atk: 150,
     def: 100,
     img: "sandgobling",
-    goldGain: 17,
-    expGain: 22
+    goldGain: 70,
+    expGain: 40
   },
     14: {
     name: "Red Goblin",
-    hp: 600,
+    hp: 4000,
     atk: 150,
     def: 100,
     img: "redgoblin",
-    goldGain: 17,
-    expGain: 22
+    goldGain: 50,
+    expGain: 55
   },
     15: {
     name: "Glazed Red Goblin",
-    hp: 600,
+    hp: 5000,
     atk: 150,
     def: 100,
     img: "redgobling",
-    goldGain: 17,
-    expGain: 22
+    goldGain: 100,
+    expGain: 55
   },
 };
 
