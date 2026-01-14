@@ -283,6 +283,7 @@ function shopUI() {
   fill(255);
   textAlign(LEFT);
   textSize(22);
+  if(currentLevel > 0 && currentLevel <= 2){
   image(images["smallHpBottle"], 150, 100, 120, 280);
   image(images["shop"], 195, 430 , 30, 30);
   text("Health Potion - 10 Gold", 90, 90);
@@ -305,6 +306,54 @@ function shopUI() {
     gold -= price;
     mouseIsPressed = false;
   }
+  }else if(currentLevel > 2 && currentLevel <= 4){
+  image(images["hpBottle"], 120, 100, 200, 320);
+  image(images["shop"], 195, 430 , 30, 30);
+  text("Health Potion - 100 Gold", 90, 90);
+  image(images["atkBottle"], 590, 100, 200, 320);
+  image(images["shop"], 665, 430 , 30, 30);
+  text("Attack Potion - 100 Gold", 560, 90);
+  image(images["defBottle"], 1050, 100, 200, 320);
+  image(images["shop"], 1135, 430 , 30, 30);
+  text("Defence Potion - 100 Gold", 1030, 90);
+  if(mouseIsPressed && m.x >= 195 && m.x <= 225 && m.y >= 430 && m.y <= 460 && gold >= price * 10){
+    player.hp += 300;
+    gold -= price *10;
+    mouseIsPressed = false;
+  }else if(mouseIsPressed && m.x >= 665 && m.x <= 695 && m.y >= 430 && m.y <= 460 && gold >= price * 10){
+    player.atk += 30;
+    gold -= price *10;
+    mouseIsPressed = false;
+  }else if(mouseIsPressed && m.x >= 1135 && m.x <= 1165 && m.y >= 430 && m.y <= 460 && gold >= price *10){
+    player.def += 30;
+    gold -= price *10;
+    mouseIsPressed = false;
+  }
+  }else{
+    image(images["bigHpBottle"], 50, 100, 320, 320);
+  image(images["shop"], 195, 430 , 30, 30);
+  text("Health Potion - 1000 Gold", 90, 90);
+  image(images["bigAtkBottle"], 520, 100, 320, 320);
+  image(images["shop"], 665, 430 , 30, 30);
+  text("Attack Potion - 1000 Gold", 560, 90);
+  image(images["bigDefBottle"], 1000, 100, 320, 320);
+  image(images["shop"], 1135, 430 , 30, 30);
+  text("Defence Potion - 1000 Gold", 1030, 90);
+  if(mouseIsPressed && m.x >= 195 && m.x <= 225 && m.y >= 430 && m.y <= 460 && gold >= price *100){
+    player.hp += 3000;
+    gold -= price *100;
+    mouseIsPressed = false;
+  }else if(mouseIsPressed && m.x >= 665 && m.x <= 695 && m.y >= 430 && m.y <= 460 && gold >= price *100){
+    player.atk += 300;
+    gold -= price *100;
+    mouseIsPressed = false;
+  }else if(mouseIsPressed && m.x >= 1135 && m.x <= 1165 && m.y >= 430 && m.y <= 460 && gold >= price *100){
+    player.def += 300;
+    gold -= price *100;
+    mouseIsPressed = false;
+  }
+  }
+  
   image(images["yellowKey"],110, 600, 330, 165);
   image(images["shop"], 260, 775 , 30, 30);
   text("Yellow key - 8 Gold", 190 , 590);
