@@ -845,11 +845,11 @@ function respawn() {
     PlayerDef = 238;
     defeatedEnemies = {};
     despawnedEntities = {};
-    currentLevel = 4;
+    currentLevel = 3;
     loadLevel(currentLevel);
     gameState = "explore";
     gold = 156;
-    perks = 70;
+    perks = 7;
     exp = 54;
     blueKey = 1;
     yellowKey = 1;
@@ -1017,7 +1017,7 @@ function generateEnemies(map, levelNum) {
         enemies.push(new Enemy(px, py, T_S, T_S, 14, key));
       }
       if (tile === "e" && !defeatedEnemies[key]) {
-        enemies.push(new Enemy(px, py, T_S, T_S, 15, key));
+        enemies.push(new Enemy(px, py, T_S*3, T_S*3, 15, key));
       }
       if (tile === "Z" && !defeatedEnemies[key]) {
         enemies.push(new Enemy(px, py, T_S*4, T_S*6, 7, key));
@@ -1132,7 +1132,6 @@ function updateMusic() {
     playMusic(FightMusic);
   } 
   else {
-    playMusic(FightMusic);
-    //playMusic(StrollMusic);
+    playMusic(StrollMusic);
   }
 }
