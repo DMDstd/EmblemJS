@@ -400,22 +400,22 @@ function shopUI() {
   text(`Damage over time perk current level = ${DoTLevel}` , 510 , 955);
   image(images["shop"], 1220, 900 , 30, 30);
   if(currentLevel != BossLevel){
-    text("Purchasable in", 1100 , 870);
+    text("Purchasable in The Lost Cave of Julai", 1100 , 870);
   }else{
-    text("Millions Arrows - 50 perk points", 1100 , 870);
+    text("Millions Arrows - 20 perk points", 1100 , 870);
   }
    if(mouseIsPressed && m.x >= 260 && m.x <= 290 && m.y >= 900 && m.y <= 930 && perks >= 3){
     Jesus = 1;
     perks -= 3;
     mouseIsPressed = false;
-  }else if(mouseIsPressed && m.x >= 690 && m.x <= 720 && m.y >= 900 && m.y <= 930 && perks >= 1){
+  }else if(mouseIsPressed && m.x >= 690 && m.x <= 720 && m.y >= 900 && m.y <= 930 && perks >= 1 && DoTLevel < 15){
     DoTLevel++;
     perks -= 1;
     mouseIsPressed = false;
-  }else if(mouseIsPressed && m.x >= 1220 && m.x <= 1250 && m.y >= 900 && m.y <= 930 && perks >= 50){
+  }else if(mouseIsPressed && m.x >= 1220 && m.x <= 1250 && m.y >= 900 && m.y <= 930 && perks >= 20){
     MillionsArrows = 1;
     mouseIsPressed = false;
-    perks -= 50;
+    perks -= 20;
   }
 }
 
@@ -867,21 +867,21 @@ function respawn() {
     redKey = 1;
     player = new Player(T_S, VIRTUAL_HEIGHT - 3*T_S, T_S/1.3, images["FenorisL1"], images["FenorisR1"]);
   } else {
-    PlayerHP = 1124;
-    PlayerAtk = 274;
-    PlayerDef = 238;
+    PlayerHP = 2913;
+    PlayerAtk = 904;
+    PlayerDef = 898;
     defeatedEnemies = {};
     despawnedEntities = {};
-    currentLevel = 5;
+    currentLevel = 4;
     loadLevel(currentLevel);
     gameState = "explore";
-    gold = 156;
-    perks = 7;
-    exp = 54;
+    gold = 356;
+    perks = 19;
+    exp = 89;
     blueKey = 1;
-    yellowKey = 1;
-    redKey = 1;
-    player = new Player(T_S, T_S, T_S/1.3, images["FenorisL1"], images["FenorisR1"]);
+    yellowKey = 0;
+    redKey = 0;
+    player = new Player(T_S, VIRTUAL_HEIGHT - 2*T_S, T_S/1.3, images["FenorisL1"], images["FenorisR1"]);
   }
   
 }
