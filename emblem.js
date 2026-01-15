@@ -41,6 +41,7 @@ let BossHP = BossMaxHP;
 let BossLevel = 5;
 let DoTLevel = 0;
 let Jesus = 0;
+let MillionsArrows = 0;
 let jumping = 0;
 let lastShotTime = 0;
 const SHOOT_COOLDOWN = 400;
@@ -394,8 +395,12 @@ function shopUI() {
   image(images["shop"], 690, 900, 30, 30);
   text("Damage over time perk - 1 point per level", 510 , 870);
   text(`Damage over time perk current level = ${DoTLevel}` , 510 , 955);
-  image(images["shop"], 1120, 900 , 30, 30);
-  text("WIP", 1100 , 870);
+  image(images["shop"], 1220, 900 , 30, 30);
+  if(currentLevel != BossLevel){
+    text("Purchasable in", 1100 , 870);
+  }else{
+    text("Millions Arrows - 50 perk points", 1100 , 870);
+  }
    if(mouseIsPressed && m.x >= 260 && m.x <= 290 && m.y >= 900 && m.y <= 930 && perks >= 3){
     Jesus = 1;
     perks -= 3;
@@ -404,8 +409,10 @@ function shopUI() {
     DoTLevel++;
     perks -= 1;
     mouseIsPressed = false;
-  }else if(mouseIsPressed && m.x >= 1120 && m.x <= 1150 && m.y >= 900 && m.y <= 930 && perks >= 3){
+  }else if(mouseIsPressed && m.x >= 1220 && m.x <= 1250 && m.y >= 900 && m.y <= 930 && perks >= 50){
+    MillionsArrows = 1;
     mouseIsPressed = false;
+    perks -= 50;
   }
 }
 
@@ -540,12 +547,13 @@ function drawUI() {
 function mousePressed() {
     if (gameState === "boss") {
     let now = millis();
-
+      if (MillionsArrows === 0) {
     if (now - lastShotTime < SHOOT_COOLDOWN) {
       return;
     }
 
     lastShotTime = now;
+  }
 
     let m = getWorldMouse();
 
