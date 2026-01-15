@@ -3,6 +3,7 @@ let water = [];
 let stairs = [];
 let triggers = [];
 let floor = [];
+let projectiles = [];
 let buttons = [];
 let images = {};
 let player;
@@ -112,6 +113,7 @@ function preload() {
   images["sandgobling"] = loadImage('./images/SandGoblinG.png');
   images["goblin"] = loadImage('./images/Goblin.png');
   images["gobling"] = loadImage('./images/GoblinG.png');
+  images["Arrow"] = loadImage('./images/Arrow.png');
   BossMusic = loadSound('./tracks/BossMusic.m4a');
   FightMusic = loadSound('./tracks/Combat.m4a');
   StrollMusic = loadSound('./tracks/stroll_track.wav');
@@ -524,6 +526,16 @@ function drawUI() {
   line(UI_WIDTH - 10, 0, UI_WIDTH - 10, VIRTUAL_HEIGHT);
 }
 
+function mousePressed() {
+  if (gameState === "boss") {
+    let m = getWorldMouse();
+
+    projectiles.push(
+      new Projectile(player.x + player.size / 2, player.y + player.size / 2, m.x, m.y, images["Arrow"])
+    );
+  }
+}
+
 function draw() {
   if (gameState == "SETTMENU") {
     MenuSettUI();
@@ -591,6 +603,29 @@ function draw() {
   for (let wall of walls) {
     wall.draw();
   }
+  for (let i = projectiles.length - 1; i >= 0; i--) {
+  let p = projectiles[i];
+  p.update();
+
+  if (gameState === "boss" && enemies.length > 0) {
+    let boss = enemies[0];
+
+    if (p.hitsBoss(boss)) {
+      BossHP -= p.damage;
+      p.dead = true;
+
+      if (BossHP <= 0) {
+        BossHP = 0;
+      }
+    }
+  }
+
+  if (p.dead) {
+    projectiles.splice(i, 1);
+  } else {
+    p.draw();
+  }
+}
   for (let w of water) {
     w.draw();
   }
@@ -657,11 +692,6 @@ function draw() {
   StrollMusic.setVolume(musicVolume);
   if (gameState === "boss") {
     drawHPBar(510, 40, 500, 10, BossHP, BossMaxHP);
-    if (mouseIsPressed) {
-      projectile = new Projectile(player.x + player.size/2, player.y + player.size/2, 10, "blue");
-      projectile.display();
-      mouseIsPressed = false;
-    }
     if (player.jumping) {
       player.jump(walls, water, enemies);
     } else {
@@ -783,7 +813,7 @@ function respawn() {
     PlayerDef = 238;
     defeatedEnemies = {};
     despawnedEntities = {};
-    currentLevel = 3;
+    currentLevel = 7;
     loadLevel(currentLevel);
     gameState = "explore";
     gold = 156;
