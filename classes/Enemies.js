@@ -140,8 +140,8 @@ const ENEMY_TYPES = {
     atk: 150,
     def: 100,
     img: "hateshadow",
-    goldGain: 100,
-    expGain: 55
+    goldGain: 0,
+    expGain: 0
   },
 };
 
