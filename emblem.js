@@ -36,17 +36,16 @@ let PlayerHP = 100;
 let PlayerAtk = 10;
 let PlayerDef = 10;
 let statOffset = 0;
-let BossMaxHP = 200000;
+let boss = null;
+let BossMaxHP = 20000;
 let BossHP = BossMaxHP;
 let BossLevel = 5;
 let DoTLevel = 0;
 let Jesus = 0;
 let MillionsArrows = 0;
 let jumping = 0;
-let lastShotTime = 0;
-let lastPoisonTime = 0;
-const POISON_COOLDOWN = 5000;
-const SHOOT_COOLDOWN = 400;
+let lastBossShotTime = 0;
+const BOSS_SHOOT_COOLDOWN = 500;
 let startBtnHover = false;
 let settingsBtnHover = false;
 let respawnHover = false;
@@ -67,6 +66,7 @@ function preload() {
   images["FenorisL1"] = loadImage('./images/FenorisL1Hit.png');
   images["FenorisR1"] = loadImage('./images/FenorisR1Hit.png');
   images["bg"] = loadImage('./images/background.png');
+  images["victory"] = loadImage('./images/victory.jpg');
   images["stone"] = loadImage('./images/Stone2.png');
   images["stairs"] = loadImage('./images/Stairs.png');
   images["GreenSlime"] = loadImage('./images/GreenSlime.png');
@@ -404,7 +404,7 @@ function shopUI() {
   }else{
     text("Millions Arrows - 20 perk points", 1100 , 870);
   }
-   if(mouseIsPressed && m.x >= 260 && m.x <= 290 && m.y >= 900 && m.y <= 930 && perks >= 3){
+   if(mouseIsPressed && m.x >= 260 && m.x <= 290 && m.y >= 900 && m.y <= 930 && perks >= 3 && Jesus == 0){
     Jesus = 1;
     perks -= 3;
     mouseIsPressed = false;
@@ -412,10 +412,10 @@ function shopUI() {
     DoTLevel++;
     perks -= 1;
     mouseIsPressed = false;
-  }else if(mouseIsPressed && m.x >= 1220 && m.x <= 1250 && m.y >= 900 && m.y <= 930 && perks >= 20){
+  }else if(mouseIsPressed && m.x >= 1220 && m.x <= 1250 && m.y >= 900 && m.y <= 930 && perks >= 5 && MillionsArrows == 0){
     MillionsArrows = 1;
     mouseIsPressed = false;
-    perks -= 20;
+    perks -= 5;
   }
 }
 
@@ -611,15 +611,6 @@ function draw() {
   drawUI();
   translate(UI_WIDTH, 0);
   if(gameState === "boss") {
-    if ( enemies.length > 0) {
-  let boss = enemies[0];
-  let now = millis();
-
-  if (now - lastPoisonTime >= POISON_COOLDOWN) {
-    projectiles.push(new Poison(boss, player));
-    lastPoisonTime = now;
-  }
-}
   if (keyIsDown(LEFT_ARROW) || keyIsDown(65)) {
     player.move("left", walls, water, enemies);
   }
@@ -667,15 +658,15 @@ for (let i = projectiles.length - 1; i >= 0; i--) {
   if (
     !p.dead &&
     gameState === "boss" &&
-    enemies.length > 0 &&
     typeof p.hitsBoss === "function"
   ) {
-    let boss = enemies[0];
-
     if (p.hitsBoss(boss)) {
       BossHP -= p.damage;
       p.dead = true;
-      if (BossHP < 0) BossHP = 0;
+      if (BossHP < 0) {
+        BossHP = 0;
+        boss.die();
+      }
     }
   }
 
@@ -750,7 +741,25 @@ for (let i = projectiles.length - 1; i >= 0; i--) {
   BossMusic.setVolume(musicVolume);
   StrollMusic.setVolume(musicVolume);
   if (gameState === "boss") {
-    drawHPBar(510, 40, 500, 10, BossHP, BossMaxHP);
+    if(!defeatedEnemies[boss.key]) {
+      boss.show();
+      bossShoot();
+      if (
+        !p.dead &&
+        p.shooter === 1 &&
+        p.hitsPlayer(player)
+      ) {
+        player.hp -= (boss.atk - player.def);
+        p.dead = true;
+        if (player.hp <= 0) {
+          gameState = "gameover";
+        }
+      }
+      drawHPBar(510, 40, 500, 10, BossHP, BossMaxHP);
+    } else {
+      gameState = "victory"
+      drawVictoryScreen();
+    }
     if (player.jumping) {
       player.jump(walls, water, enemies);
     } else {
@@ -759,6 +768,40 @@ for (let i = projectiles.length - 1; i >= 0; i--) {
   }
 pop();
 }
+
+function bossShoot() {
+  let now = millis();
+  if (now - lastBossShotTime < BOSS_SHOOT_COOLDOWN) return;
+  lastBossShotTime = now;
+  projectiles.push(
+    new Projectile(
+      boss.x + boss.w / 2,
+      boss.y + boss.h / 2,
+      player.x + player.size / 2,
+      player.y + player.size / 2,
+      1,
+      images["poison"] // replace later if you want a fireball
+    )
+  );
+}
+
+function drawVictoryScreen() {
+  // Reset transforms so we draw in screen space
+  resetMatrix();
+  background(images["victory"]);
+  noStroke();
+  fill(0, 220);
+  rect(0, 0, width, height);
+  textAlign(CENTER, CENTER);
+  fill(255, 215, 0);
+  textSize(64 * (width / VIRTUAL_WIDTH));
+  text("VICTORY!", width / 2, height / 2 - 140);
+  fill(255);
+  textSize(26 * (width / VIRTUAL_WIDTH));
+  text("You have defeated the boss", width / 2, height / 2 - 70);
+  text("and escaped the Maze of Emblem.", width / 2, height / 2 - 40);
+}
+
 
 function drawStartupMenu() {
   if (images["bg"]) {
@@ -851,14 +894,14 @@ function drawGameOver() {
 
 function respawn() {
   if (Math.round(musicVolume * 100) == 86) {
-    PlayerHP = 200000;
-    PlayerAtk = 3000;
-    PlayerDef = 3000;
+    PlayerHP = 70000;
+    PlayerAtk = 3800;
+    PlayerDef = 2800;
     defeatedEnemies = {};
     despawnedEntities = {};
     currentLevel = BossLevel;
     loadLevel(currentLevel);
-    gameState = "explore";
+    gameState = "boss";
     gold = 200;
     perks = 5;
     exp = 0;
@@ -867,21 +910,21 @@ function respawn() {
     redKey = 1;
     player = new Player(T_S, VIRTUAL_HEIGHT - 3*T_S, T_S/1.3, images["FenorisL1"], images["FenorisR1"]);
   } else {
-    PlayerHP = 2913;
-    PlayerAtk = 904;
-    PlayerDef = 898;
+    PlayerHP = 100;
+    PlayerAtk = 10;
+    PlayerDef = 10;
     defeatedEnemies = {};
     despawnedEntities = {};
-    currentLevel = 4;
+    currentLevel = 1;
     loadLevel(currentLevel);
     gameState = "explore";
-    gold = 356;
-    perks = 19;
-    exp = 89;
+    gold = 0;
+    perks = 0;
+    exp = 0;
     blueKey = 1;
-    yellowKey = 0;
-    redKey = 0;
-    player = new Player(T_S, VIRTUAL_HEIGHT - 2*T_S, T_S/1.3, images["FenorisL1"], images["FenorisR1"]);
+    yellowKey = 1;
+    redKey = 1;
+    player = new Player(T_S, T_S, T_S/1.3, images["FenorisL1"], images["FenorisR1"]);
   }
   
 }
@@ -1047,7 +1090,7 @@ function generateEnemies(map, levelNum) {
         enemies.push(new Enemy(px, py, T_S*3, T_S*3, 15, key));
       }
       if (tile === "Z" && !defeatedEnemies[key]) {
-        enemies.push(new Enemy(px, py, T_S*4, T_S*6, 7, key));
+        boss = new Enemy(px, py, T_S*4, T_S*6, 7, key);
       }
     }
   }
