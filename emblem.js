@@ -44,6 +44,8 @@ let Jesus = 0;
 let MillionsArrows = 0;
 let jumping = 0;
 let lastShotTime = 0;
+let lastPoisonTime = 0;
+const POISON_COOLDOWN = 5000;
 const SHOOT_COOLDOWN = 400;
 let startBtnHover = false;
 let settingsBtnHover = false;
@@ -126,6 +128,7 @@ function preload() {
   images["stormshadow"] = loadImage('./images/StormShadow.png');
   images["watershadow"] = loadImage('./images/WaterShadow.png');
   images["greedshadow"] = loadImage('./images/GreedShadow.png');
+  images["poison"] = loadImage('./images/Poison.png');
   BossMusic = loadSound('./tracks/BossMusic.m4a');
   FightMusic = loadSound('./tracks/Combat.m4a');
   StrollMusic = loadSound('./tracks/stroll_track.wav');
@@ -608,6 +611,15 @@ function draw() {
   drawUI();
   translate(UI_WIDTH, 0);
   if(gameState === "boss") {
+    if ( enemies.length > 0) {
+  let boss = enemies[0];
+  let now = millis();
+
+  if (now - lastPoisonTime >= POISON_COOLDOWN) {
+    projectiles.push(new Poison(boss, player));
+    lastPoisonTime = now;
+  }
+}
   if (keyIsDown(LEFT_ARROW) || keyIsDown(65)) {
     player.move("left", walls, water, enemies);
   }
@@ -646,17 +658,24 @@ for (let i = projectiles.length - 1; i >= 0; i--) {
   let p = projectiles[i];
   p.update();
 
-  if (p.hitsWall(walls)) {
+  // ---- wall collision (any projectile that supports it) ----
+  if (typeof p.hitsWall === "function" && p.hitsWall(walls)) {
     p.dead = true;
   }
 
-  if (!p.dead && gameState === "boss" && enemies.length > 0) {
+
+  if (
+    !p.dead &&
+    gameState === "boss" &&
+    enemies.length > 0 &&
+    typeof p.hitsBoss === "function"
+  ) {
     let boss = enemies[0];
 
     if (p.hitsBoss(boss)) {
       BossHP -= p.damage;
       p.dead = true;
-      if (BossHP <= 0) BossHP = 0;
+      if (BossHP < 0) BossHP = 0;
     }
   }
 
