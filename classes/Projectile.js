@@ -27,9 +27,23 @@ class Projectile {
   draw() {
     push();
     translate(this.x, this.y);
-    rotate(this.angle);
+    rotate(this.angle + 60);
     imageMode(CENTER);
     image(this.img, 0, 0, 40, 20);
     pop();
   }
+ hitsWall(walls) {
+  const r = 8;
+
+  for (let w of walls) {
+    const size = w.w || w.size || T_S;
+
+    if (this.x + r > w.x && this.x - r < w.x + size && this.y + r > w.y && this.y - r < w.y + size
+    ) {
+      return true;
+    }
+  }
+  return false;
+}
+
 }

@@ -41,6 +41,8 @@ let BossLevel = 7;
 let DoTLevel = 0;
 let Jesus = 0;
 let jumping = 0;
+let lastShotTime = 0;
+const SHOOT_COOLDOWN = 400;
 let startBtnHover = false;
 let settingsBtnHover = false;
 let respawnHover = false;
@@ -527,11 +529,25 @@ function drawUI() {
 }
 
 function mousePressed() {
-  if (gameState === "boss") {
+    if (gameState === "boss") {
+    let now = millis();
+
+    if (now - lastShotTime < SHOOT_COOLDOWN) {
+      return;
+    }
+
+    lastShotTime = now;
+
     let m = getWorldMouse();
 
     projectiles.push(
-      new Projectile(player.x + player.size / 2, player.y + player.size / 2, m.x, m.y, images["Arrow"])
+      new Projectile(
+        player.x + player.size / 2,
+        player.y + player.size / 2,
+        m.x,
+        m.y,
+        images["Arrow"]
+      )
     );
   }
 }
@@ -603,20 +619,21 @@ function draw() {
   for (let wall of walls) {
     wall.draw();
   }
-  for (let i = projectiles.length - 1; i >= 0; i--) {
+for (let i = projectiles.length - 1; i >= 0; i--) {
   let p = projectiles[i];
   p.update();
 
-  if (gameState === "boss" && enemies.length > 0) {
+  if (p.hitsWall(walls)) {
+    p.dead = true;
+  }
+
+  if (!p.dead && gameState === "boss" && enemies.length > 0) {
     let boss = enemies[0];
 
     if (p.hitsBoss(boss)) {
       BossHP -= p.damage;
       p.dead = true;
-
-      if (BossHP <= 0) {
-        BossHP = 0;
-      }
+      if (BossHP <= 0) BossHP = 0;
     }
   }
 
