@@ -28,12 +28,18 @@ class Projectile {
   }
 
   hitsPlayer(player) {
-    if (this.shooter == 1) {
-      return (this.x > player.x && this.x < player.x + player.w && this.y > player.y && this.y < player.y + player.h);
-    } else {
-      return;
-    }
-  }
+  if (this.shooter !== 1) return false;
+
+  const r = 8; // projectile hit radius
+
+  return (
+    this.x + r > player.x &&
+    this.x - r < player.x + T_S &&
+    this.y + r > player.y &&
+    this.y - r < player.y + T_S
+  );
+}
+
 
   draw() {
     push();

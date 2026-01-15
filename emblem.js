@@ -37,14 +37,16 @@ let PlayerAtk = 10;
 let PlayerDef = 10;
 let statOffset = 0;
 let boss = null;
-let BossMaxHP = 20000;
+let BossMaxHP = 2000000;
 let BossHP = BossMaxHP;
 let BossLevel = 5;
 let DoTLevel = 0;
 let Jesus = 0;
 let MillionsArrows = 0;
 let jumping = 0;
+let lastShotTime = 0;
 let lastBossShotTime = 0;
+const SHOOT_COOLDOWN = 500;
 const BOSS_SHOOT_COOLDOWN = 500;
 let startBtnHover = false;
 let settingsBtnHover = false;
@@ -566,6 +568,7 @@ function mousePressed() {
         player.y + player.size / 2,
         m.x,
         m.y,
+        0,
         images["Arrow"]
       )
     );
@@ -670,6 +673,18 @@ for (let i = projectiles.length - 1; i >= 0; i--) {
     }
   }
 
+  if (
+        !p.dead &&
+        p.shooter === 1 &&
+        p.hitsPlayer(player)
+      ) {
+        player.hp -= (boss.atk - player.def);
+        p.dead = true;
+        if (player.hp <= 0) {
+          gameState = "gameover";
+        }
+      }
+
   if (p.dead) {
     projectiles.splice(i, 1);
   } else {
@@ -744,17 +759,6 @@ for (let i = projectiles.length - 1; i >= 0; i--) {
     if(!defeatedEnemies[boss.key]) {
       boss.show();
       bossShoot();
-      if (
-        !p.dead &&
-        p.shooter === 1 &&
-        p.hitsPlayer(player)
-      ) {
-        player.hp -= (boss.atk - player.def);
-        p.dead = true;
-        if (player.hp <= 0) {
-          gameState = "gameover";
-        }
-      }
       drawHPBar(510, 40, 500, 10, BossHP, BossMaxHP);
     } else {
       gameState = "victory"
