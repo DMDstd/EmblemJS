@@ -12,6 +12,7 @@ let musicVolume = 0.5;
 let currentTrack = null;
 const T_S = 59;
 let currentLevel = 1;
+let currentLevelName = "";
 let defeatedEnemies = {};
 let despawnedEntities = {};
 const UI_WIDTH = 381;
@@ -124,6 +125,7 @@ function preload() {
   images["shadow"] = loadImage('./images/Shadow.png');
   images["stormshadow"] = loadImage('./images/StormShadow.png');
   images["watershadow"] = loadImage('./images/WaterShadow.png');
+  images["greedshadow"] = loadImage('./images/GreedShadow.png');
   BossMusic = loadSound('./tracks/BossMusic.m4a');
   FightMusic = loadSound('./tracks/Combat.m4a');
   StrollMusic = loadSound('./tracks/stroll_track.wav');
@@ -475,8 +477,8 @@ function drawUI() {
   rect(0, 0, UI_WIDTH, VIRTUAL_HEIGHT);
   fill(255);
   textSize(16);
-  text(`Floor: ${currentLevel}`, 20, 60);
-  image(images["FenorisR1"], 150, 50, 200, 300);
+  text(`Floor ${currentLevel}: ${currentLevelName}`, 20, 60);
+  image(images["FenorisR1"], 150, 70, 180, 300);
   text("Perk points: " + perks, 20, 100);
   textSize(14);
   image(images["heart"], 20, 110, 30, 30);
@@ -568,6 +570,12 @@ function mousePressed() {
 }
 
 function draw() {
+  textAlign(LEFT);
+  if (currentLevel == 1)currentLevelName = "The Great Maze of Jura";
+  if (currentLevel == 2)currentLevelName = "The Great Fall";
+  if (currentLevel == 3)currentLevelName = "Shadow Garden";
+  if (currentLevel == 4)currentLevelName = "The One Unleashed";
+  if (currentLevel == 5)currentLevelName = "The Lost Cave of Julai";
   if (gameState == "SETTMENU") {
     MenuSettUI();
     return;
@@ -845,11 +853,11 @@ function respawn() {
     PlayerDef = 238;
     defeatedEnemies = {};
     despawnedEntities = {};
-    currentLevel = 5;
+    currentLevel = 4;
     loadLevel(currentLevel);
     gameState = "explore";
     gold = 156;
-    perks = 50;
+    perks = 70;
     exp = 54;
     blueKey = 1;
     yellowKey = 1;
