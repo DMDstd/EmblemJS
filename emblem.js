@@ -37,7 +37,7 @@ let PlayerDef = 10;
 let statOffset = 0;
 let BossMaxHP = 200000;
 let BossHP = BossMaxHP;
-let BossLevel = 7;
+let BossLevel = 5;
 let DoTLevel = 0;
 let Jesus = 0;
 let jumping = 0;
@@ -114,6 +114,13 @@ function preload() {
   images["goblin"] = loadImage('./images/Goblin.png');
   images["gobling"] = loadImage('./images/GoblinG.png');
   images["Arrow"] = loadImage('./images/Arrow.png');
+  images["bloodshadow"] = loadImage('./images/BloodShadow.png');
+  images["demonshadow"] = loadImage('./images/DemonShadow.png');
+  images["goldshadow"] = loadImage('./images/GoldShadow.png');
+  images["hateshadow"] = loadImage('./images/HateShadow.png');
+  images["shadow"] = loadImage('./images/Shadow.png');
+  images["stormshadow"] = loadImage('./images/StormShadow.png');
+  images["watershadow"] = loadImage('./images/WaterShadow.png');
   BossMusic = loadSound('./tracks/BossMusic.m4a');
   FightMusic = loadSound('./tracks/Combat.m4a');
   StrollMusic = loadSound('./tracks/stroll_track.wav');
@@ -575,7 +582,7 @@ function draw() {
   if (keyIsDown(RIGHT_ARROW) || keyIsDown(68)) {
     player.move("right", walls, water, enemies);
   }
-  if (keyIsDown(UP_ARROW)|| keyIsDown(87)) {
+  if (keyIsDown(UP_ARROW)|| keyIsDown(87) || keyIsDown(32)) {
     if (!player.jumping && (player.y > VIRTUAL_HEIGHT - T_S*2.7)) {
       player.jumping = true;
     }
@@ -797,7 +804,7 @@ function respawn() {
     PlayerDef = 3000;
     defeatedEnemies = {};
     despawnedEntities = {};
-    currentLevel = 7;
+    currentLevel = BossLevel;
     loadLevel(currentLevel);
     gameState = "explore";
     gold = 200;
@@ -813,7 +820,7 @@ function respawn() {
     PlayerDef = 238;
     defeatedEnemies = {};
     despawnedEntities = {};
-    currentLevel = 7;
+    currentLevel = 3;
     loadLevel(currentLevel);
     gameState = "explore";
     gold = 156;
@@ -1100,6 +1107,7 @@ function updateMusic() {
     playMusic(FightMusic);
   } 
   else {
-    playMusic(StrollMusic);
+    playMusic(FightMusic);
+    //playMusic(StrollMusic);
   }
 }
