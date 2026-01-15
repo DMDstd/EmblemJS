@@ -128,17 +128,17 @@ const ENEMY_TYPES = {
     14: {
     name: "Blood Shadow",
     hp: 4000,
-    atk: 150,
-    def: 100,
+    atk: 1250,
+    def: 1000,
     img: "bloodshadow",
     goldGain: 50,
     expGain: 55
   },
     15: {
     name: "Hate Shadow",
-    hp: 5000,
-    atk: 150,
-    def: 100,
+    hp: 6000,
+    atk: 2750,
+    def: 2000,
     img: "hateshadow",
     goldGain: 0,
     expGain: 0
