@@ -91,18 +91,18 @@ const ENEMY_TYPES = {
   },
     10: {
     name: "Gold Shadow",
-    hp: 600,
-    atk: 150,
-    def: 100,
+    hp: 1400,
+    atk: 507,
+    def: 177,
     img: "goldshadow",
     goldGain: 100,
     expGain: 0
   },
     11: {
     name: "Greed Shadow",
-    hp: 600,
-    atk: 150,
-    def: 100,
+    hp: 1800,
+    atk: 888,
+    def: 333,
     img: "greedshadow",
     goldGain: 0,
     expGain: 0
@@ -110,8 +110,8 @@ const ENEMY_TYPES = {
     12: {
     name: "Water Shadow",
     hp: 1000,
-    atk: 150,
-    def: 100,
+    atk: 500,
+    def: 300,
     img: "watershadow",
     goldGain: 30,
     expGain: 35
@@ -119,8 +119,8 @@ const ENEMY_TYPES = {
     13: {
     name: "Storm Shadow",
     hp: 1400,
-    atk: 150,
-    def: 100,
+    atk: 750,
+    def: 500,
     img: "stormshadow",
     goldGain: 60,
     expGain: 35
