@@ -72,74 +72,74 @@ const ENEMY_TYPES = {
     expGain: 0
   },
     8: {
-    name: "Goblin",
+    name: "Shadow",
     hp: 800,
     atk: 350,
     def: 190,
-    img: "goblin",
+    img: "shadow",
     goldGain: 25,
     expGain: 30
   },
     9: {
-    name: "Gold Goblin",
+    name: "Gold Shadow",
     hp: 1200,
     atk: 390,
     def: 290,
-    img: "gobling",
+    img: "goldshadow",
     goldGain: 50,
     expGain: 30
   },
     10: {
-    name: "Blue Goblin",
+    name: "Water Shadow",
     hp: 1000,
     atk: 150,
     def: 100,
-    img: "bluegoblin",
+    img: "watershadow",
     goldGain: 30,
     expGain: 35
   },
     11: {
-    name: "Glazed Blue Goblin",
+    name: "Storm Shadow",
     hp: 1400,
     atk: 150,
     def: 100,
-    img: "bluegobling",
+    img: "stormshadow",
     goldGain: 60,
     expGain: 35
   },
     12: {
-    name: "Sand Goblin",
+    name: "",
     hp: 600,
     atk: 150,
     def: 100,
-    img: "sandgoblin",
+    img: "",
     goldGain: 35,
     expGain: 40
   },
     13: {
-    name: "Glazed Sand Goblin",
+    name: "Demon Shadow",
     hp: 600,
     atk: 150,
     def: 100,
-    img: "sandgobling",
+    img: "demonshadow",
     goldGain: 70,
     expGain: 40
   },
     14: {
-    name: "Red Goblin",
+    name: "Blood Shadow",
     hp: 4000,
     atk: 150,
     def: 100,
-    img: "redgoblin",
+    img: "bloodshadow",
     goldGain: 50,
     expGain: 55
   },
     15: {
-    name: "Glazed Red Goblin",
+    name: "Hate Shadow",
     hp: 5000,
     atk: 150,
     def: 100,
-    img: "redgobling",
+    img: "hateshadow",
     goldGain: 100,
     expGain: 55
   },
