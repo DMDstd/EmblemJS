@@ -38,8 +38,7 @@ class Projectile {
   for (let w of walls) {
     const size = w.w || w.size || T_S;
 
-    if (this.x + r > w.x && this.x - r < w.x + size && this.y + r > w.y && this.y - r < w.y + size
-    ) {
+    if (this.x + r > w.x && this.x - r < w.x + size && this.y + r > w.y && this.y - r < w.y + size) {
       return true;
     }
   }
