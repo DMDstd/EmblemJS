@@ -404,7 +404,7 @@ function shopUI() {
   if(currentLevel != BossLevel){
     text("Purchasable in The Lost Cave of Julai", 1100 , 870);
   }else{
-    text("Millions Arrows - 20 perk points", 1100 , 870);
+    text("Millions Arrows - 5 perk points", 1100 , 870);
   }
    if(mouseIsPressed && m.x >= 260 && m.x <= 290 && m.y >= 900 && m.y <= 930 && perks >= 3 && Jesus == 0){
     Jesus = 1;
