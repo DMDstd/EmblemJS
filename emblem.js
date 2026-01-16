@@ -627,7 +627,7 @@ function draw() {
   }
 for (let i = projectiles.length - 1; i >= 0; i--) {
   let p = projectiles[i];
-  p.update();
+  if(gameState != "INUI")p.update();
 
   // ---- wall collision (any projectile that supports it) ----
   if (typeof p.hitsWall === "function" && p.hitsWall(walls)) {
