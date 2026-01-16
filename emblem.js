@@ -1199,7 +1199,7 @@ function playMusic(track) {
 }
 
 function updateMusic() {
-  if (currentLevel === BossLevel) {
+  if (currentLevel === BossLevel && (gameState != "INUI")) {
     playMusic(BossMusic);
   } 
   else if (gameState === "combat" || gameState === "combatResult") {
